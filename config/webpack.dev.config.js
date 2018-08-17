@@ -4,7 +4,7 @@ const {
 	spawn
 } = require('child_process');
 const paths = require('./paths');
-const webpackBaseConfig = require('./webpack.basic.config');
+const webpackBaseConfig = require('./webpack.basic.config')
 
 module.exports = webpackMerge(webpackBaseConfig, {
 	mode: "development",
@@ -46,7 +46,14 @@ module.exports = webpackMerge(webpackBaseConfig, {
 				.on('error', spawnError => console.error(spawnError));
 		},
 		after() {
-			console.log("Started")
-		}
+			setTimeout(() => {
+				spawn("yarn", ["clean:electron"], {
+					shell: true,
+					env: process.env,
+					stdio: 'inherit'
+				}).on('close', code => process.exit(code))
+			}, 2000)
+		},
+
 	},
 });

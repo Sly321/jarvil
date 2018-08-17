@@ -7,6 +7,7 @@
   "license": "MIT",
   "dependencies": {},
   "scripts": {
+    "clean:electron": "shx rm src/electron/*.js",
     "build": "tsc -rootDir ./src/electron/ && yarn build:app && cross-env NODE_ENV=production electron-builder",
     "build:app": "cross-env NODE_ENV=production webpack --config ./config/webpack.prod.config.js",
     "start": "tsc -rootDir ./src/electron/ && cross-env NODE_ENV=development webpack-dev-server --config ./config/webpack.dev.config.js"
@@ -16,6 +17,7 @@
     "electron": "3.0.0-beta.5",
     "electron-builder": "^20.28.1",
     "html-webpack-plugin": "^3.2.0",
+    "shx": "^0.3.2",
     "typescript": "^3.0.1",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0",
