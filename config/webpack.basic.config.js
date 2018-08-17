@@ -1,7 +1,7 @@
-const path = require('path');
-const paths = require('./paths');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+const paths = require("./paths");
+const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
 	entry: {
@@ -13,27 +13,27 @@ module.exports = {
 		rules: [{
 				test: /\.jsx?$/,
 				include: [
-					path.join(__dirname, '/app'),
+					path.join(__dirname, "/app"),
 				],
 				exclude: /node_modules/,
 				use: [{
-						loader: 'babel-loader',
+						loader: "babel-loader",
 					},
-					'eslint-loader',
+					"eslint-loader",
 				]
 			},
 			{
 				test: /\.scss$/,
 				use: [
-					'style-loader',
-					'css-loader',
-					'resolve-url-loader',
-					'sass-loader',
+					"style-loader",
+					"css-loader",
+					"resolve-url-loader",
+					"sass-loader",
 					{
-						loader: 'sass-resources-loader',
+						loader: "sass-resources-loader",
 						options: {
 							resources: [
-								path.join(__dirname, 'app/scss', '**/_*.scss'),
+								path.join(__dirname, "app/scss", "**/_*.scss"),
 							],
 						},
 					}
@@ -41,11 +41,11 @@ module.exports = {
 			},
 			{
 				test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot|cur)$/,
-				loader: 'file-loader',
+				loader: "file-loader",
 				options: {
-					name: '[path][name].[ext]',
-					publicPath: process.env.NODE_ENV === 'development' ? path.join(__dirname) : undefined,
-					outputPath: process.env.NODE_ENV === 'development' ? '/' : undefined,
+					name: "[path][name].[ext]",
+					publicPath: process.env.NODE_ENV === "development" ? path.join(__dirname) : undefined,
+					outputPath: process.env.NODE_ENV === "development" ? "/" : undefined,
 				},
 			}
 		]
@@ -53,36 +53,36 @@ module.exports = {
 
 	plugins: [
 		new HtmlWebpackPlugin({
-			chunks: ['launcher'],
-			filename: 'launcher.html',
+			chunks: ["launcher"],
+			filename: "launcher.html",
 			template: paths.launcherIndex,
-			inject: 'body',
+			inject: "body",
 		}),
 		new HtmlWebpackPlugin({
-			chunks: ['settings'],
-			filename: 'settings.html',
+			chunks: ["settings"],
+			filename: "settings.html",
 			template: paths.settingsIndex,
-			inject: 'body',
+			inject: "body",
 		}),
 		new webpack.DefinePlugin({
-			'process.env': {
+			"process.env": {
 				NODE_ENV: JSON.stringify(process.env.NODE_ENV),
 			},
-			'DEVELOPMENT': process.env.NODE_ENV === 'development',
-			'PRODUCTION': process.env.NODE_ENV === 'production',
+			"DEVELOPMENT": process.env.NODE_ENV === "development",
+			"PRODUCTION": process.env.NODE_ENV === "production",
 		})
 	],
 	resolve: {
 		alias: {
-			assets: path.resolve(__dirname, 'app/assets'),
-			constants: path.resolve(__dirname, 'app/constants'),
-			components: path.resolve(__dirname, 'app/components'),
-			page: path.resolve(__dirname, 'app/page'),
-			setting: path.resolve(__dirname, 'app/page/setting'),
-			webview: path.resolve(__dirname, 'app/page/webview'),
-			scss: path.resolve(__dirname, 'app/scss'),
-			utils: path.resolve(__dirname, 'app/utils'),
+			assets: path.resolve(__dirname, "app/assets"),
+			constants: path.resolve(__dirname, "app/constants"),
+			components: path.resolve(__dirname, "app/components"),
+			page: path.resolve(__dirname, "app/page"),
+			setting: path.resolve(__dirname, "app/page/setting"),
+			webview: path.resolve(__dirname, "app/page/webview"),
+			scss: path.resolve(__dirname, "app/scss"),
+			utils: path.resolve(__dirname, "app/utils"),
 		},
-		extensions: ['.js', '.jsx'],
+		extensions: [".js", ".jsx"],
 	},
 };
