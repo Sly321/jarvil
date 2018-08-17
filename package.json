@@ -9,9 +9,10 @@
     "electron": "3.0.0-beta.5"
   },
   "scripts": {
-    "start": "webpack-dev-server --config ./config/webpack.dev.config.js"
+    "start": "cross-env NODE_ENV=development webpack-dev-server --config ./config/webpack.dev.config.js"
   },
   "devDependencies": {
+    "cross-env": "^5.2.0",
     "html-webpack-plugin": "^3.2.0",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0",
