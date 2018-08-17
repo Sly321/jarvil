@@ -68,12 +68,8 @@ module.exports = {
 			'process.env': {
 				NODE_ENV: JSON.stringify(process.env.NODE_ENV),
 			},
-			'DEVELOPMENT': JSON.stringify(process.env.NODE_ENV === 'development'),
+			'DEVELOPMENT': process.env.NODE_ENV === 'development',
 			'PRODUCTION': process.env.NODE_ENV === 'production',
-		}),
-		new webpack.EnvironmentPlugin({
-			NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
-			DEBUG: false
 		})
 	],
 	resolve: {
