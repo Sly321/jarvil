@@ -1,0 +1,8 @@
+{
+  "name": "jarvil",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Sly321/jarvil.git",
+  "author": "Sven Liebig <liebigsv@gmail.com>",
+  "license": "MIT"
+}
