@@ -8,9 +8,10 @@
   "dependencies": {},
   "scripts": {
     "clean:electron": "shx rm src/electron/*.js",
-    "build": "tsc -rootDir ./src/electron/ && yarn build:app && cross-env NODE_ENV=production electron-builder",
+    "clean:target": "shx rm -rf dist",
+    "build": "tsc && yarn build:app && cross-env NODE_ENV=production electron-builder && yarn clean:electron",
     "build:app": "cross-env NODE_ENV=production webpack --config ./config/webpack.prod.config.js",
-    "start": "tsc -rootDir ./src/electron/ && cross-env NODE_ENV=development webpack-dev-server --config ./config/webpack.dev.config.js"
+    "start": "tsc && cross-env NODE_ENV=development webpack-dev-server --config ./config/webpack.dev.config.js"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
@@ -30,7 +31,7 @@
       "category": "jarvil"
     },
     "files": [
-      "src/*.js",
+      "src/electron/*.js",
       "dist",
       "node_modules",
       "config/paths.js"

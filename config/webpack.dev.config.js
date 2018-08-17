@@ -34,7 +34,6 @@ module.exports = webpackMerge(webpackBaseConfig, {
 		// hot: true,
 		port: 1112,
 		before() {
-			console.log('Start Main Process...');
 			spawn(
 					'yarn', ['electron .'], {
 						shell: true,
