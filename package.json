@@ -5,18 +5,32 @@
   "repository": "git@github.com:Sly321/jarvil.git",
   "author": "Sven Liebig <liebigsv@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "electron": "3.0.0-beta.5"
-  },
+  "dependencies": {},
   "scripts": {
+    "build": "yarn build:app && cross-env NODE_ENV=production electron-builder",
+    "build:app": "cross-env NODE_ENV=production webpack --config ./config/webpack.prod.config.js",
     "start": "cross-env NODE_ENV=development webpack-dev-server --config ./config/webpack.dev.config.js"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
+    "electron": "3.0.0-beta.5",
+    "electron-builder": "^20.28.1",
     "html-webpack-plugin": "^3.2.0",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.5",
     "webpack-merge": "^4.1.4"
+  },
+  "build": {
+    "appId": "jarvil",
+    "mac": {
+      "category": "jarvil"
+    },
+    "files": [
+      "src/*.js",
+      "dist",
+      "node_modules",
+      "config/paths.js"
+    ]
   }
 }

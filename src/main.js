@@ -20,11 +20,16 @@ function createWindow() {
 
 	// and load the index.html of the app.
 	// mainWindow.loadFile('index.html')
+	console.debug()
 	mainWindow.loadURL(url.format({
-		pathname: paths.launcherIndex,
+		pathname: process.env.NODE_ENV === "development" ? paths.launcherIndex : paths.launcherTargetIndex,
 		protocol: 'file:',
 		slashes: true,
 	}))
+
+	// if (process.env.NODE_ENV === 'development') {
+	mainWindow.webContents.openDevTools();
+	//   }
 
 	// Open the DevTools.
 	// mainWindow.webContents.openDevTools()
