@@ -4,6 +4,14 @@
 
 ## installation
 
+First of all, you need electron installed globally:
+
+```bash
+npm i -g electron
+```
+
+After this you need to install the project dependencies:
+
 ```bash
 npm i
 ```

@@ -4,3 +4,5 @@ package-lock.json
 dist
 **/*.js.map
 src/electron/**/*.js
+npm-debug.log
+npm-debug.log*

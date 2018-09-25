@@ -9,6 +9,7 @@
   "scripts": {
     "clean:electron": "shx rm src/electron/*.js",
     "clean:target": "shx rm -rf dist",
+    "run-electron": "electron .",
     "build": "tsc && yarn build:app && cross-env NODE_ENV=production electron-builder && yarn clean:electron",
     "build:app": "cross-env NODE_ENV=production webpack --config ./config/webpack.prod.config.js",
     "start": "tsc && cross-env NODE_ENV=development webpack-dev-server --config ./config/webpack.dev.config.js"
