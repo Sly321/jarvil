@@ -11,44 +11,42 @@ module.exports = {
 
 	module: {
 		rules: [{
-				test: /\.jsx?$/,
-				include: [
-					path.join(__dirname, "/app"),
-				],
-				exclude: /node_modules/,
-				use: [{
-						loader: "babel-loader",
-					},
-					"eslint-loader",
-				]
-			},
-			{
-				test: /\.scss$/,
-				use: [
-					"style-loader",
-					"css-loader",
-					"resolve-url-loader",
-					"sass-loader",
-					{
-						loader: "sass-resources-loader",
-						options: {
-							resources: [
-								path.join(__dirname, "app/scss", "**/_*.scss"),
-							],
-						},
-					}
-				]
-			},
-			{
-				test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot|cur)$/,
-				loader: "file-loader",
-				options: {
-					name: "[path][name].[ext]",
-					publicPath: process.env.NODE_ENV === "development" ? path.join(__dirname) : undefined,
-					outputPath: process.env.NODE_ENV === "development" ? "/" : undefined,
+			oneOf: [{
+					test: /\.(ts|tsx)$/,
+					// include: path.join(__dirname, "/app"),
+					loader: require.resolve('ts-loader')
 				},
-			}
-		]
+				{
+					test: /\.jsx?$/,
+					include: [
+						path.join(__dirname, "/app"),
+					],
+					exclude: /node_modules/,
+					use: [{
+							loader: "babel-loader",
+						},
+						"eslint-loader",
+					]
+				},
+				{
+					test: /\.scss$/,
+					use: [
+						"style-loader",
+						"css-loader",
+						"sass-loader"
+					]
+				},
+				{
+					test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot|cur)$/,
+					loader: "file-loader",
+					options: {
+						name: "[path][name].[ext]",
+						publicPath: process.env.NODE_ENV === "development" ? path.join(__dirname) : undefined,
+						outputPath: process.env.NODE_ENV === "development" ? "/" : undefined,
+					},
+				}
+			]
+		}]
 	},
 
 	plugins: [
@@ -83,6 +81,6 @@ module.exports = {
 			scss: path.resolve(__dirname, "app/scss"),
 			utils: path.resolve(__dirname, "app/utils"),
 		},
-		extensions: [".js", ".jsx"],
+		extensions: [".js", ".jsx", ".ts", ".tsx"],
 	},
 };

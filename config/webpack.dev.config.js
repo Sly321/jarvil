@@ -45,13 +45,16 @@ module.exports = webpackMerge(webpackBaseConfig, {
 				.on('error', spawnError => console.error(spawnError));
 		},
 		after() {
-			setTimeout(() => {
-				spawn("yarn", ["clean:electron"], {
-					shell: true,
-					env: process.env,
-					stdio: 'inherit'
-				}).on('close', code => process.exit(code))
-			}, 2000)
+			// setTimeout(() => {
+			// 	spawn("yarn", ["clean:electron"], {
+			// 		shell: true,
+			// 		env: process.env,
+			// 		stdio: 'inherit'
+			// 	}).on('close', (code) => {
+			// 		console.log("Remove JS Files.")
+			// 		// process.exit(code)
+			// 	})
+			// }, 2000)
 		},
 
 	},

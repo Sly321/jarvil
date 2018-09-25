@@ -2,7 +2,7 @@ const path = require('path')
 
 const root = path.resolve(__dirname, "..")
 const src = path.resolve(root, "src")
-const jsOrTs = "js"
+const jsOrTs = "ts"
 
 const paths = {
 	root: root,

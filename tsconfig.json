@@ -3,6 +3,7 @@
 		"module": "commonjs",
 		"noImplicitAny": true,
 		"sourceMap": false,
+		"jsx": "react",
 		// "outDir": "dist",
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
