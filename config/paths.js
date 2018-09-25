@@ -14,6 +14,7 @@ const paths = {
 	settings: path.resolve(src, "settings"),
 	settingsIndex: path.resolve(src, "settings", "index.html"),
 	settingsReact: path.resolve(src, "settings", "app", `index.${jsOrTs}x`),
+	settingsTargetIndex: path.resolve(root, "dist", "settings.html")
 }
 
 module.exports = paths
