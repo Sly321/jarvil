@@ -3,6 +3,7 @@ import createSettingsWindow from "./SettingsWindow"
 import Events from "./Events"
 
 ipcMain.on(Events.OpenSettings, () => {
+	console.debug(`openSettings`)
 	createSettingsWindow()
 })
 

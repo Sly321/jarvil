@@ -35,11 +35,11 @@ module.exports = webpackMerge(webpackBaseConfig, {
 		port: 1112,
 		before() {
 			spawn(
-					'yarn', ['electron .'], {
+					'yarn', ['run-electron'], {
 						shell: true,
 						env: process.env,
 						stdio: 'inherit'
-					},
+					}
 				)
 				.on('close', code => process.exit(code))
 				.on('error', spawnError => console.error(spawnError));
