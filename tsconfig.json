@@ -1,18 +1,23 @@
 {
-	"compilerOptions": {
-		"module": "commonjs",
-		"noImplicitAny": true,
-		"sourceMap": false,
-		"jsx": "react",
-		// "outDir": "dist",
-		"allowSyntheticDefaultImports": true,
-		"esModuleInterop": true,
-		"baseUrl": ".",
-		"paths": {
-			"*": ["node_modules/*"]
-		}
-	},
-	"include": [
-		"src/electron/**/*"
-	]
+    "compilerOptions": {
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "target": "es6",
+        "lib": ["es6", "dom"],
+        "sourceMap": false,
+        "jsx": "react",
+        // "outDir": "dist",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "baseUrl": ".",
+        "paths": {
+            "*": ["node_modules/*"]
+        }
+    },
+    "include": [
+        "src/electron/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
 }
