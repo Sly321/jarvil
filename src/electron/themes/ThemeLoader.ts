@@ -3,6 +3,7 @@ import Theme from "./Theme"
 import { resolve, dirname } from "path"
 import { homedir } from "os"
 import FileSystem from "../utils/FileSystem"
+import Logger from "../utils/Logger"
 
 export class ThemeLoader {
     public static getThemes(): Array<Theme> {
@@ -30,6 +31,7 @@ export class ThemeLoader {
         const resultDirectory = resolve(homeDirectory, "jarvil", "themes")
 
         if (!existsSync(resultDirectory)) {
+            Logger.info(`ThemeLoader.get::themesLocation - no themes directory, creating it at: ${resultDirectory}`)
             FileSystem.MakeDirRecursively(resultDirectory)
         }
 

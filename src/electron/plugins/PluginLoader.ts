@@ -3,6 +3,7 @@ import { resolve, dirname } from "path"
 import FileSystem from "../utils/FileSystem"
 import { homedir } from "os"
 import JarvilPlugin from "./JarvilPlugin"
+import Logger from "../utils/Logger"
 
 /**
  *
@@ -17,11 +18,12 @@ export default class PluginLoader {
 
         if (pluginFolder) {
             const files = readdirSync(pluginFolder)
-            if (files.length === 1) {
-                console.debug(`versuche plugin zu requiren: ${files[0]}`)
-                const plugin = require(resolve(pluginFolder, files[0]))
-                return [plugin]
-            }
+            return files.map(file => {
+                const plugin = require(resolve(pluginFolder, file))
+                // TODO is JS or TS, Compile TS
+                // TODO isPlugin () else fehlermeldung to logger
+                return plugin
+            })
         }
 
         return []
@@ -32,6 +34,7 @@ export default class PluginLoader {
         const resultDirectory = resolve(homeDirectory, "jarvil", "plugins")
 
         if (!existsSync(resultDirectory)) {
+            Logger.info(`PluginLoader.get::pluginFolder - no plugin directory, creating it at: ${resultDirectory}`)
             FileSystem.MakeDirRecursively(resultDirectory)
         }
 

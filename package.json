@@ -12,7 +12,7 @@
     "react-dom": "^16.5.2"
   },
   "scripts": {
-    "clean:electron": "shx rm src/electron/*.js",
+    "clean:electron": "shx rm src/electron/**/*.js",
     "clean:target": "shx rm -rf dist",
     "run-electron": "electron .",
     "build": "tsc && yarn build:app && cross-env NODE_ENV=production electron-builder && yarn clean:electron",
