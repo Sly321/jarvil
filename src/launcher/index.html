@@ -23,14 +23,14 @@
 	<div id="root"></div>
 
 	<script>
-		(function (window) {
-			const {
-				// remote,
-				ipcRenderer
-			} = require('electron');
-			window.ipcRenderer = ipcRenderer;
-			// window.remote = remote;
-		})(window);
+			(function (window) {
+				const {
+					// remote,
+					ipcRenderer
+				} = require('electron');
+				window.ipcRenderer = ipcRenderer;
+				// window.remote = remote;
+			})(window);
 
 		if (process.env.NODE_ENV === 'development') {
 			document.write('<script defer src=\"http://localhost:1112/build/launcher.js"><\/script>')
