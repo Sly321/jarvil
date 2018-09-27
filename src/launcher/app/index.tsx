@@ -7,11 +7,14 @@ import Launcher from "./Launcher"
 
 render(<Launcher />, document.getElementById("root"))
 
+const getEventBus = (): any => {
+    return (window as any).ipcRenderer
+}
+
+console.log(getEventBus().sendSync("get.themes"))
+
 // document.getElementById("root").innerHTML = "ROOT TUT GUT<a href='https://google.com'>google</a>"
 
-// const getEventBus = (): any => {
-// 	return (window as any).ipcRenderer
-// }
 
 // const createBtn = (text: string, onClick: (this: HTMLElement, ev: MouseEvent) => any) => {
 // 	const btn = document.createElement("button")
