@@ -3,6 +3,11 @@ import createSettingsWindow from "./SettingsWindow"
 import Events from "./Events"
 import { resolve } from "path"
 import { ThemeLoader } from "./themes/ThemeLoader"
+import PluginLoader from "./plugins/PluginLoader"
+import Processor from "./Processor"
+
+const plugins = PluginLoader.getPlugins()
+const processor = new Processor(plugins)
 
 ipcMain.on(Events.OpenSettings, () => {
     console.debug(`openSettings`)
@@ -21,6 +26,23 @@ ipcMain.on("get.themes", (event: Electron.Event) => {
 
     console.debug(themes)
     event.returnValue = themes
+})
+
+ipcMain.on("get.plugins", (event: Electron.Event) => {
+    console.debug(`get.themes - called`)
+
+    const plugins = PluginLoader.getPlugins()
+
+    console.debug(plugins)
+    event.returnValue = plugins
+})
+
+ipcMain.on("process.input", (event: Electron.Event, input: string) => {
+    console.debug("process.input", input)
+
+    const resultItems = processor.getResultItems(input)
+
+    event.returnValue = resultItems
 })
 
 // settings

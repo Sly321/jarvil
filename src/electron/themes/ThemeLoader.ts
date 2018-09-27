@@ -6,18 +6,14 @@ import FileSystem from "../utils/FileSystem"
 
 export class ThemeLoader {
     public static getThemes(): Array<Theme> {
-        console.log("Dirname: ", __dirname)
-
-        const themeFolder = ThemeLoader.getThemesLocation()
-        let themes: Array<Theme> = []
+        const themeFolder = ThemeLoader.themesLocation
 
         if (themeFolder) {
-            console.debug(`readFilesSync on folder`, themeFolder)
             const files = readdirSync(themeFolder)
-            themes = files.map(file => new Theme(file, readFileSync(resolve(themeFolder, file), "utf8")))
+            return files.map(file => new Theme(file, readFileSync(resolve(themeFolder, file), "utf8")))
         }
 
-        return themes
+        return []
     }
 
     /**
@@ -29,12 +25,11 @@ export class ThemeLoader {
      * @returns {string}
      * @memberof ThemeLoader
      */
-    private static getThemesLocation(): string {
+    private static get themesLocation(): string {
         const homeDirectory = process.env.NODE_ENV === "development" ? resolve(dirname(require.main.filename), "..", "..", "local-config") : homedir()
         const resultDirectory = resolve(homeDirectory, "jarvil", "themes")
 
         if (!existsSync(resultDirectory)) {
-            console.debug(`does not exists, i build ${resultDirectory}`)
             FileSystem.MakeDirRecursively(resultDirectory)
         }
 
