@@ -1,48 +1,54 @@
-import { ipcMain } from "electron"
+import { ipcMain, BrowserWindow } from "electron"
 import createSettingsWindow from "./SettingsWindow"
 import Events from "./Events"
-import { resolve } from "path"
 import { ThemeLoader } from "./themes/ThemeLoader"
 import PluginLoader from "./plugins/PluginLoader"
 import Processor from "./Processor"
 
-const plugins = PluginLoader.getPlugins()
-const processor = new Processor(plugins)
+export default class EventHandler {
+    private processor: Processor
 
-ipcMain.on(Events.OpenSettings, () => {
-    console.debug(`openSettings`)
-    createSettingsWindow()
-})
+    constructor(private mainWindow: BrowserWindow) {
+        const plugins = PluginLoader.getPlugins()
+        this.processor = new Processor(plugins)
+        this.registerListeners()
+    }
 
-ipcMain.on(Events.ConsoleDirName, (event: Electron.Event) => {
-    console.log(__dirname) // "E:\workspace\jarvil\dist\win-unpacked\resources\app.asar\src\electron"
-    event.returnValue = __dirname
-})
+    private registerListeners() {
+        ipcMain.on(Events.OpenSettings, () => {
+            console.debug(`openSettings`)
+            createSettingsWindow(this.mainWindow)
+        })
 
-ipcMain.on("get.themes", (event: Electron.Event) => {
-    console.debug(`get.themes - called`)
+        ipcMain.on(Events.ConsoleDirName, (event: Electron.Event) => {
+            console.log(__dirname) // "E:\workspace\jarvil\dist\win-unpacked\resources\app.asar\src\electron"
+            event.returnValue = __dirname
+        })
 
-    const themes = ThemeLoader.getThemes()
+        ipcMain.on("get.themes", (event: Electron.Event) => {
+            console.debug(`get.themes - called`)
 
-    console.debug(themes)
-    event.returnValue = themes
-})
+            const themes = ThemeLoader.getThemes()
 
-ipcMain.on("get.plugins", (event: Electron.Event) => {
-    console.debug(`get.themes - called`)
+            console.debug(themes)
+            event.returnValue = themes
+        })
 
-    const plugins = PluginLoader.getPlugins()
+        ipcMain.on("get.plugins", (event: Electron.Event) => {
+            console.debug(`get.themes - called`)
 
-    console.debug(plugins)
-    event.returnValue = plugins
-})
+            const plugins = PluginLoader.getPlugins()
 
-ipcMain.on("process.input", (event: Electron.Event, input: string) => {
-    console.debug("process.input", input)
+            console.debug(plugins)
+            event.returnValue = plugins
+        })
 
-    const resultItems = processor.getResultItems(input)
+        ipcMain.on("process.input", (event: Electron.Event, input: string) => {
+            console.debug("process.input", input)
 
-    event.returnValue = resultItems
-})
+            const resultItems = this.processor.getResultItems(input)
 
-// settings
+            event.returnValue = resultItems
+        })
+    }
+}

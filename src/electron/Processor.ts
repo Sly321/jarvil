@@ -17,4 +17,11 @@ export default class Processor {
 
         return result
     }
+
+    // TODO implement
+    public executeAction(input: string): Promise<void> {
+        console.log("Should Execute some Actions", input)
+
+        return Promise.resolve()
+    }
 }

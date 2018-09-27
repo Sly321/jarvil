@@ -3,7 +3,7 @@ import createSettingsWindow from "./SettingsWindow"
 const paths = require('../../config/paths');
 import url from "url"
 
-import "./Eventing"
+import EventHandler from "./Eventing"
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -208,6 +208,9 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
     createWindow()
+    if (mainWindow !== null) {
+        new EventHandler(mainWindow)
+    }
 })
 
 // Quit when all windows are closed.
@@ -224,6 +227,7 @@ app.on('activate', function () {
     // dock icon is clicked and there are no other windows open.
     if (mainWindow === null) {
         createWindow()
+        new EventHandler(mainWindow)
     }
 })
 
