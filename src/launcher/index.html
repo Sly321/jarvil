@@ -2,13 +2,13 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title>Hello World!</title>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
 </head>
 
 <body>
-	<h1>Hello World!</h1>
-	<!-- All of the Node.js APIs are available in this renderer process. -->
+    <!-- <h1>Hello World!</h1>
+	All of the Node.js APIs are available in this renderer process.
 	We are using Node.js
 	<script>
 		document.write(process.versions.node)
@@ -18,26 +18,26 @@
 	</script>, and Electron
 	<script>
 		document.write(process.versions.electron)
-	</script>.
+	</script>. -->
 
-	<div id="root"></div>
+    <div id="root"></div>
 
-	<script>
-		(function (window) {
-			const {
-				// remote,
-				ipcRenderer
-			} = require('electron');
-			window.ipcRenderer = ipcRenderer;
-			// window.remote = remote;
-		})(window);
+    <script>
+        (function (window) {
+            const {
+                // remote,
+                ipcRenderer
+            } = require('electron');
+            window.ipcRenderer = ipcRenderer;
+            // window.remote = remote;
+        })(window);
 
-		if (process.env.NODE_ENV === 'development') {
-			document.write('<script defer src=\"http://localhost:1112/build/launcher.js"><\/script>')
-			// require('electron-react-devtools').install();
-			// require('electron-redux-devtools').install();
-		}
-	</script>
+        if (process.env.NODE_ENV === 'development') {
+            document.write('<script defer src=\"http://localhost:1112/build/launcher.js"><\/script>')
+            // require('electron-react-devtools').install();
+            // require('electron-redux-devtools').install();
+        }
+    </script>
 </body>
 
 </html>
