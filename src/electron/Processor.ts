@@ -1,4 +1,5 @@
 import JarvilPlugin from "./plugins/JarvilPlugin"
+import Logger from "./utils/Logger"
 
 export interface ResultItem {
     title: string
@@ -11,9 +12,16 @@ export default class Processor {
     public getResultItems(input: string): Array<ResultItem> {
         const result: Array<ResultItem> = []
 
-        if (this.plugins.length === 1) {
-            result.push(...this.plugins[0].getResultItems(input))
-        }
+        this.plugins.forEach(plugin => {
+
+            try {
+                const resultitems = plugin.getResultItems(input)
+                result.push(...resultitems)
+            } catch (e) {
+                Logger.error(`Error while parsing the resultItems of ${plugin.name}:\n\t${e}`)
+            }
+
+        })
 
         return result
     }
