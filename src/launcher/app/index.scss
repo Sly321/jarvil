@@ -1,295 +1,59 @@
-$ic: #b37399;
-$color-body: rgba(7, 70, 165, 0.5);
-$first-animation-duration: 1s;
-$animation-overlap: 0.5s;
-$letter-width: 55px; // 55 15
-$letter-height: 100px; // 100 25
-$letter-line-width: 5px; // 5 2
-$letter-margin: 5px;
-$letter-border-radius: 0.5rem;
-// position
-$offset-top: 5px;
-// Delay
-$animation-incremental-delay: 0s;
-$animation-incremental-delay-value: 0.05s;
-@keyframes vertical-letter-animation {
-    from {
-        height: 0px;
-    }
-    to {
-        height: $letter-height;
-    }
-}
+$color-body: rgba(7, 70, 165, 0.0);
 
-@keyframes vertical-letter-half-animation {
-    from {
-        height: 0px;
-    }
-    to {
-        height: $letter-height / 2;
-    }
+* {
+    box-sizing: border-box;
 }
-
-@keyframes horizontal-letter-animation {
-    from {
-        width: 0px;
-    }
-    to {
-        width: $letter-width;
-    }
-}
-
-@keyframes horizontal-letter-half-animation {
-    from {
-        width: 0px;
-    }
-    to {
-        width: $letter-width / 2;
-    }
-}
-
-@keyframes container-slide {
-    from {
-        margin-left: 0;
-    }
-    to {
-        margin-left: -((($letter-width + $letter-margin) * 5) + $letter-line-width);
-    }
-}
-
-@keyframes container-heartbeat {
-    0% {
-        transform: scale( 1);
-    }
-    20% {
-        transform: scale( 1.1);
-    }
-    40% {
-        transform: scale( 1);
-    }
-    60% {
-        transform: scale( 1.1);
-    }
-    80% {
-        transform: scale( 1);
-    }
-    100% {
-        transform: scale( 1);
-    }
-}
-
 
 html, body {
     -webkit-app-region: drag;
+    margin: 0;
+    height: 100%;
 }
 
 body {
+    width: 100%;
     background-color: $color-body;
 }
 
-input {
-        -webkit-app-region: no-drag;
-}
 
-.launcher-input {
-    width: 100%;
+
+
+#root {
+ width: 100%;
 }
 
 .launcher {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    .search-input,.result-list  {
+        order: 0;
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: auto;
+        align-self: stretch;
+        margin: 0;
+    }
+
+    .search-input {
+        width: 100%;
+    }
+
     .result-list {
         list-style-type: none;
-        padding: 0em;
+        padding: 4px;
+        background-color: rgba(255, 182, 47, 0.288);
     }
 
 
 }
 
 
-%vertical-line {
-    position: absolute;
-    background: $ic;
-    width: $letter-line-width;
-    animation: vertical-letter-animation $first-animation-duration cubic-bezier(.4, 0, .2, 1) forwards;
+input {
+    -webkit-app-region: no-drag;
 }
 
-%horizontal-line {
-    position: absolute;
-    background: $ic;
-    height: $letter-line-width;
-    animation: horizontal-letter-animation 0.8s $first-animation-duration - $animation-overlap cubic-bezier(.4, .5, .2, 1) forwards;
-}
 
-%vertical-line-half {
-    position: absolute;
-    background: $ic;
-    width: $letter-line-width;
-    animation: vertical-letter-half-animation 1 $first-animation-duration cubic-bezier(.4, 0, .2, 1) forwards;
-}
 
-.intro {
-    margin-top: 5px;
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    animation: container-heartbeat 2s 1.5s cubic-bezier(0.46, 0.2, 0.54, 0.82) forwards infinite;
-    .container {
-        position: relative;
-        margin-top: $offset-top;
-        animation: container-slide 1.5s cubic-bezier(.4, 0, .2, 1) forwards;
-        .j-letter-top {
-            @extend %vertical-line;
-            left: $letter-width - $letter-line-width;
-            border-top-left-radius: $letter-border-radius;
-        }
-        $animation-incremental-delay: $animation-incremental-delay+$animation-incremental-delay-value;
-        .j-letter-bottom {
-            @extend %horizontal-line;
-            top: $letter-height - $letter-line-width;
-            right: -$letter-width;
-            border-top-left-radius: $letter-border-radius;
-        }
-        $animation-incremental-delay: $animation-incremental-delay+$animation-incremental-delay-value;
-        .a-letter-left {
-            @extend %vertical-line;
-            left: $letter-width + $letter-margin;
-            bottom: -$letter-height;
-            border-top-left-radius: $letter-border-radius;
-            animation-delay: $animation-incremental-delay;
-        }
-        $animation-incremental-delay: $animation-incremental-delay+$animation-incremental-delay-value;
-        .a-letter-right {
-            @extend %vertical-line;
-            left: ($letter-width * 2) + $letter-margin - $letter-line-width;
-            top: 0;
-            animation-delay: $animation-incremental-delay;
-        }
-        $animation-incremental-delay: $animation-incremental-delay+$animation-incremental-delay-value;
-        .a-letter-bridge-top {
-            @extend %horizontal-line;
-            left: $letter-width + $letter-margin;
-            top: 0;
-            border-top-left-radius: $letter-border-radius;
-            animation-delay: $animation-incremental-delay;
-        }
-        $animation-incremental-delay: $animation-incremental-delay+$animation-incremental-delay-value;
-        .a-letter-bridge-mid {
-            @extend %horizontal-line;
-            right: -(($letter-width * 2) + $letter-margin);
-            top: ($letter-height / 2) - ($letter-line-width / 2);
-            animation-delay: $animation-incremental-delay;
-        }
-        $animation-incremental-delay: $animation-incremental-delay+$animation-incremental-delay-value;
-        .a-letter-left {
-            @extend %vertical-line;
-            left: $letter-width + $letter-margin;
-            bottom: -$letter-height;
-            border-top-left-radius: $letter-border-radius;
-            animation-delay: $animation-incremental-delay;
-        }
-        $animation-incremental-delay: $animation-incremental-delay+$animation-incremental-delay-value;
-        .r-letter-left {
-            @extend %vertical-line;
-            left: ($letter-width + $letter-margin) * 2;
-            bottom: -$letter-height;
-            border-top-left-radius: $letter-border-radius;
-            animation-delay: $animation-incremental-delay;
-        }
-        $animation-incremental-delay: $animation-incremental-delay+$animation-incremental-delay-value;
-        .r-letter-top {
-            @extend %horizontal-line;
-            left: ($letter-width + $letter-margin) * 2;
-            top: 0;
-            border-top-left-radius: $letter-border-radius;
-            border-top-right-radius: $letter-border-radius;
-            animation-delay: $animation-incremental-delay;
-        }
-        $animation-incremental-delay: $animation-incremental-delay+$animation-incremental-delay-value;
-        .r-letter-bottom-right {
-            @extend %vertical-line-half;
-            left: ($letter-width + $letter-margin) * 3 - $letter-margin - $letter-line-width;
-            top: ($letter-height / 2);
-            transform: rotate(-15deg);
-            -webkit-transform-origin-y: $letter-width / 2 + $letter-line-width / 2;
-            animation-delay: $animation-incremental-delay;
-        }
-        $animation-incremental-delay: $animation-incremental-delay+$animation-incremental-delay-value;
-        .r-letter-mid {
-            @extend %horizontal-line;
-            left: ($letter-width + $letter-margin) * 2;
-            top: ($letter-height / 2) - ($letter-line-width / 2);
-            border-bottom-right-radius: $letter-border-radius;
-            animation-delay: $animation-incremental-delay;
-        }
-        $animation-incremental-delay: $animation-incremental-delay+$animation-incremental-delay-value;
-        .r-letter-right {
-            @extend %vertical-line-half;
-            left: ($letter-width + $letter-margin) * 3 - $letter-margin - $letter-line-width;
-            top: 0;
-            border-top-right-radius: $letter-border-radius;
-            border-bottom-right-radius: $letter-border-radius;
-            animation-delay: $animation-incremental-delay;
-        }
-        $animation-incremental-delay: $animation-incremental-delay+$animation-incremental-delay-value;
-        .v-letter-left {
-            @extend %vertical-line;
-            left: ($letter-width + $letter-margin) * 3;
-            bottom: -$letter-height;
-            transform: rotate(-15deg);
-            -webkit-transform-origin-y: 0px;
-            animation-delay: $animation-incremental-delay;
-        }
-        $animation-incremental-delay: $animation-incremental-delay+$animation-incremental-delay-value;
-        .v-letter-right {
-            @extend %vertical-line;
-            left: ($letter-width + $letter-margin) * 4 - $letter-margin - $letter-line-width;
-            top: 0;
-            transform: rotate(15deg);
-            -webkit-transform-origin-y: 0px;
-            animation-delay: $animation-incremental-delay;
-        }
-        $animation-incremental-delay: $animation-incremental-delay+$animation-incremental-delay-value;
-        .i-letter {
-            @extend %vertical-line;
-            left: ($letter-width + $letter-margin) * 4;
-            bottom: -$letter-height;
-            animation-delay: $animation-incremental-delay;
-        }
-        $animation-incremental-delay: $animation-incremental-delay+$animation-incremental-delay-value;
-        .s-letter-top {
-            @extend %horizontal-line;
-            left: ($letter-width + $letter-margin) * 4 + $letter-line-width + $letter-margin;
-            top: 0;
-            animation-delay: $animation-incremental-delay;
-        }
-        $animation-incremental-delay: $animation-incremental-delay+$animation-incremental-delay-value;
-        .s-letter-left {
-            @extend %vertical-line-half;
-            left: ($letter-width + $letter-margin) * 4 + $letter-line-width + $letter-margin;
-            top: 0;
-            animation-delay: $animation-incremental-delay;
-        }
-        $animation-incremental-delay: $animation-incremental-delay+$animation-incremental-delay-value;
-        .s-letter-right {
-            @extend %vertical-line-half;
-            left: ($letter-width + $letter-margin) * 5;
-            top: ($letter-height / 2) - ($letter-line-width / 2);
-            animation-delay: $animation-incremental-delay;
-        }
-        $animation-incremental-delay: $animation-incremental-delay+$animation-incremental-delay-value;
-        .s-letter-mid {
-            @extend %horizontal-line;
-            left: ($letter-width + $letter-margin) * 4 + $letter-line-width + $letter-margin;
-            top: ($letter-height / 2) - ($letter-line-width / 2);
-            animation-delay: $animation-incremental-delay;
-        }
-        $animation-incremental-delay: $animation-incremental-delay+$animation-incremental-delay-value;
-        .s-letter-bottom {
-            @extend %horizontal-line;
-            left: ($letter-width + $letter-margin) * 4 + $letter-line-width + $letter-margin;
-            top: $letter-height - $letter-line-width;
-            animation-delay: $animation-incremental-delay;
-        }
-        $animation-incremental-delay: $animation-incremental-delay+$animation-incremental-delay-value;
-    }
-}

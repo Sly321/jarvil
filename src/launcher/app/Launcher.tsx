@@ -24,19 +24,22 @@ export default class Launcher extends React.Component<Props, State> {
         }
     }
 
-    private handleChange(event) {
-        console.log("ich synce")
+    private handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+
         let { value } = event.target
-        console.log("ich synce 2", Events.ProcessInput, value)
+
         let resultList: Array<{ description: string, title: string }> = getEventBus().sendSync(Events.ProcessInput, value)
-        console.log("ich synce 3")
+
+
         this.setState({ resultList })
+
+        // getEventBus().send("resize", document.querySelector("#root")!.clientWidth, document.querySelector("#root")!.clientHeight)
     }
 
     render() {
         return (
             <div className="launcher">
-                <input className="launcher-input" onChange={this.handleChange.bind(this)} />
+                <input className="search-input" onChange={this.handleChange.bind(this)} />
 
                 {this.showResults}
             </div>

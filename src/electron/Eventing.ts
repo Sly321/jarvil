@@ -52,5 +52,11 @@ export default class EventHandler {
 
             event.returnValue = resultItems
         })
+
+        ipcMain.on("resize", (event: Electron.Event, width: number, height: number) => {
+            this.mainWindow.setSize(width, height)
+            console.debug(`resize: width: ${width}, height: ${height}`)
+
+        })
     }
 }
