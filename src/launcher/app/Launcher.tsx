@@ -1,20 +1,13 @@
 import * as React from "react"
 import Events from "../../electron/Events"
 import ThemeHandler from "./ThemeHandler"
-// import ThemeHandler from "./ThemeHandler"
+import ServiceFactory from "./ServiceFactory"
 
 export interface Props {
-
 }
 
 export interface State {
     resultList: Array<{ description: string, title: string }>
-
-}
-
-const getEventBus = (): any => {
-    console.log("return ipc")
-    return (window as any).ipcRenderer
 }
 
 export default class Launcher extends React.Component<Props, State> {
@@ -27,16 +20,14 @@ export default class Launcher extends React.Component<Props, State> {
     }
 
     private handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-
         let { value } = event.target
 
-        let resultList: Array<{ description: string, title: string }> = getEventBus().sendSync(Events.ProcessInput, value)
+        let resultList: Array<{ description: string, title: string }> = ServiceFactory.Eventbus.sendSync(Events.ProcessInput, value)
 
-        console.debug(resultList)
-
-        this.setState({ resultList })
-
-        // getEventBus().send("resize", document.querySelector("#root")!.clientWidth, document.querySelector("#root")!.clientHeight)
+        this.setState({ resultList }, () => {
+            const container = document.querySelector("#root")
+            ServiceFactory.Eventbus.sendAsync("resize", { height: container.clientHeight, width: container.clientWidth })
+        })
     }
 
     render() {
