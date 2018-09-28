@@ -20,9 +20,7 @@ export default class JarvilPlugin {
         public trigger: string,
         private resultItemsGetter: (...args: Array<string>) => Array<ResultItem>,
         private actionListener: (...args: Array<string>) => void
-    ) {
-        console.log("construct: ", name, resultItemsGetter)
-    }
+    ) { }
 
     public getResultItems(...args: Array<string>): Array<ResultItem> {
         return this.resultItemsGetter(...args)

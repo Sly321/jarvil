@@ -73,8 +73,12 @@ export default class PluginLoader {
 
             // File type
             if (type === FileType.JavaScript) {
-                importedClass = require(resolve(pluginFolder, pluginIndexPath))
-                Logger.info("Loaded: ", importedClass, "from", resolve(pluginFolder, pluginIndexPath))
+                try {
+                    importedClass = require(resolve(pluginFolder, pluginIndexPath))
+                } catch (e) {
+                    Logger.error(`Problem while importing plugin ${pluginIndexPath}, exception:\n${e}`)
+                    return
+                }
             } else if (type === FileType.TypeScript) {
                 const outputPath = pluginIndexPath.replace(".ts", ".js")
                 // Logger.info("<<< TypeScript angezogen, wird noch nicht geladen. >>>")
@@ -82,8 +86,6 @@ export default class PluginLoader {
                 const fileInput = host.readFile(pluginIndexPath)
                 // const program = ts.createProgram([pluginIndexPath], {})
                 const trans = ts.transpileModule(fileInput, { compilerOptions: options })
-                // Logger.info(JSON.stringify(trans))
-                // Logger.info(trans.outputText)
                 writeFileSync(outputPath, trans.outputText)
 
                 if (!existsSync(outputPath)) {
@@ -91,12 +93,12 @@ export default class PluginLoader {
                     return
                 }
 
-                // const inhalt = readFileSync(outputPath, "utf8")
-                // Logger.info("inhalt")
-                // Logger.info(inhalt)
-                // Logger.info("inhalt ende")
-
-                importedClass = require(outputPath)
+                try {
+                    importedClass = require(outputPath)
+                } catch (e) {
+                    Logger.error(`Problem while importing plugin ${pluginIndexPath}, exception:\n${e}`)
+                    return
+                }
                 // Logger.info("Loaded: ", importedClass, "from", outputPath)
             } else {
                 Logger.warn(`Unknown filetype in:\n\t- ${pluginIndexPath}\nwhile loading the plugin.\nSupported filetypes are .js | .ts`)
