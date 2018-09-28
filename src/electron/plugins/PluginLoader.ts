@@ -77,7 +77,7 @@ export default class PluginLoader {
                 Logger.info("Loaded: ", importedClass, "from", resolve(pluginFolder, pluginIndexPath))
             } else if (type === FileType.TypeScript) {
                 const outputPath = pluginIndexPath.replace(".ts", ".js")
-                Logger.info("<<< TypeScript angezogen, wird noch nicht geladen. >>>")
+                // Logger.info("<<< TypeScript angezogen, wird noch nicht geladen. >>>")
                 const host = ts.createCompilerHost({})
                 const fileInput = host.readFile(pluginIndexPath)
                 // const program = ts.createProgram([pluginIndexPath], {})
@@ -91,20 +91,20 @@ export default class PluginLoader {
                     return
                 }
 
-                const inhalt = readFileSync(outputPath, "utf8")
-                Logger.info("inhalt")
-                Logger.info(inhalt)
-                Logger.info("inhalt ende")
+                // const inhalt = readFileSync(outputPath, "utf8")
+                // Logger.info("inhalt")
+                // Logger.info(inhalt)
+                // Logger.info("inhalt ende")
 
                 importedClass = require(outputPath)
-                Logger.info("Loaded: ", importedClass, "from", outputPath)
+                // Logger.info("Loaded: ", importedClass, "from", outputPath)
             } else {
                 Logger.warn(`Unknown filetype in:\n\t- ${pluginIndexPath}\nwhile loading the plugin.\nSupported filetypes are .js | .ts`)
                 return
             }
 
             const { name, version } = packageJson
-            const plugin = new JarvilPlugin(name, version, importedClass.trigger, importedClass.getResultItems)
+            const plugin = new JarvilPlugin(name, version, importedClass.trigger, importedClass.getResultItems, importedClass.action)
             result.push(plugin)
             Logger.info(`Successfully imported plugin: ${plugin.name}:${plugin.version}`)
         })

@@ -8,8 +8,10 @@
   "dependencies": {
     "@types/react": "^16.4.14",
     "@types/react-dom": "^16.0.7",
+    "@types/react-helmet": "^5.0.7",
     "react": "^16.5.2",
-    "react-dom": "^16.5.2"
+    "react-dom": "^16.5.2",
+    "react-helmet": "^5.2.0"
   },
   "scripts": {
     "clean:electron": "shx rm src/electron/**/*.js",
@@ -17,6 +19,7 @@
     "run-electron": "electron .",
     "build": "tsc && yarn build:app && cross-env NODE_ENV=production electron-builder && yarn clean:electron",
     "build:app": "cross-env NODE_ENV=production webpack --config ./config/webpack.prod.config.js",
+    "build:js": "tsc && cross-env NODE_ENV=development webpack --config ./config/webpack.dev.config.js",
     "start": "tsc && cross-env NODE_ENV=development webpack-dev-server --config ./config/webpack.dev.config.js",
     "start:debug": "tsc && cross-env NODE_ENV=development webpack-dev-server -d --config ./config/webpack.dev.config.js"
   },

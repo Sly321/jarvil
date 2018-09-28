@@ -1,7 +1,27 @@
 .launcher {
-    background: green;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
 }
 
-.launcher input {
-    background: yellow;
+/* Input Component */
+.launcher input.search-input {
+    font-size: 33px;
+    background: transparent;
+    outline: none;
+    border: none;
+    padding: 18px;
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Result List Warraper */
+.launcher ul.result-list {
+    background: transparent;
+}
+
+/* Result List Items */
+.launcher ul.result-list li {
+    color: white;
+    font-size: 30px;
+    padding: 15px;
 }
