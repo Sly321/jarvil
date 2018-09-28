@@ -17,7 +17,7 @@ export default class Launcher extends React.Component<Props, State> {
     render() {
         return (
             <div>
-                this is Launcher
+                <input className="input-launcher" />
             </div>
         )
     }
