@@ -35,8 +35,8 @@ export default class Launcher extends React.Component<Props, State> {
 
     render() {
         return (
-            <div>
-                <input className="input-launcher" onChange={this.handleChange.bind(this)} />
+            <div className="launcher">
+                <input className="launcher-input" onChange={this.handleChange.bind(this)} />
 
                 {this.showResults}
             </div>
@@ -48,7 +48,7 @@ export default class Launcher extends React.Component<Props, State> {
         let list = this.state.resultList.map((item: { description: string, title: string }, index: any) => {
             return <li>{item.title}, {item.description}</li>
         })
-        return (<ul>
+        return (<ul className="result-list">
             {list}
         </ul>)
     }
