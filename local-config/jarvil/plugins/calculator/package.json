@@ -1,0 +1,10 @@
+{
+  "name": "calculator",
+  "author": {
+    "name": "Sven Liebig",
+    "email": "liebigsv@gmail.com",
+    "url": "http://svenliebig.com"
+  },
+  "main": "index.ts",
+  "version": "1.0.0"
+}

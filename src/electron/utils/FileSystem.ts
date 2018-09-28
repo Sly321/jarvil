@@ -1,6 +1,12 @@
 import { isAbsolute, sep, resolve } from "path"
 import { mkdirSync } from "fs"
 
+export enum FileType {
+    Unknown = "filetype/unknown",
+    JavaScript = "filetype/javascript",
+    TypeScript = "filetype/typescript"
+}
+
 export default class FileSystem {
 
     /**
@@ -37,5 +43,15 @@ export default class FileSystem {
 
             return curDir;
         }, initDir);
+    }
+
+
+    public static getFileType(file: string): FileType {
+        if (file.endsWith(".js")) {
+            return FileType.JavaScript
+        } else if (file.endsWith(".ts")) {
+            return FileType.TypeScript
+        }
+        return FileType.Unknown
     }
 }
