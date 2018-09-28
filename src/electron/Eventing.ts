@@ -4,6 +4,7 @@ import Events from "./Events"
 import { ThemeLoader } from "./themes/ThemeLoader"
 import PluginLoader from "./plugins/PluginLoader"
 import Processor from "./Processor"
+import Logger from "./utils/Logger"
 
 export default class EventHandler {
     private processor: Processor
@@ -15,6 +16,7 @@ export default class EventHandler {
     }
 
     private registerListeners() {
+        Logger.info("register the eventlisteners")
         ipcMain.on(Events.OpenSettings, () => {
             console.debug(`openSettings`)
             createSettingsWindow(this.mainWindow)
@@ -43,8 +45,8 @@ export default class EventHandler {
             event.returnValue = plugins
         })
 
-        ipcMain.on("process.input", (event: Electron.Event, input: string) => {
-            console.debug("process.input", input)
+        ipcMain.on(Events.ProcessInput, (event: Electron.Event, input: string) => {
+            console.debug(Events.ProcessInput, input)
 
             const resultItems = this.processor.getResultItems(input)
 

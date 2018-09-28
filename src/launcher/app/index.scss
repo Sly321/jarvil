@@ -78,10 +78,32 @@ $animation-incremental-delay-value: 0.05s;
     }
 }
 
-body {
+
+html, body {
     -webkit-app-region: drag;
-    background-color: $color-body
 }
+
+body {
+    background-color: $color-body;
+}
+
+input {
+        -webkit-app-region: no-drag;
+}
+
+.launcher-input {
+    width: 100%;
+}
+
+.launcher {
+    .result-list {
+        list-style-type: none;
+        padding: 0em;
+    }
+
+
+}
+
 
 %vertical-line {
     position: absolute;
