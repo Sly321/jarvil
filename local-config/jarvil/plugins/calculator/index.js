@@ -1,35 +1,22 @@
+const math = require('mathjs');
 class Calculator {
     static get trigger() {
         return "c";
     }
     static getResultItems(...args) {
-        let desc = "";
-        let result = 0;
-        let operation = null;
-        args.forEach(arg => {
-            const parsed = parseInt(arg);
-            if (Number.isNaN(parsed)) {
-                if (arg === "+") {
-                    operation = "+";
-                    return;
-                }
+        try {
+            const result = math.eval(args.join(""));
+            if (Number.isNaN(parseInt(result))) {
+                return [];
             }
-            if (parsed >= 0) {
-                if (operation === "+") {
-                    result += parsed;
-                    operation = null;
-                    return;
-                }
-                if (operation === null) {
-                    result = parsed;
-                }
-            }
-        });
-        desc = result.toString();
-        return [{
-                title: "Calculator",
-                description: desc
-            }];
+            return [{
+                    title: "Calc",
+                    description: result
+                }];
+        }
+        catch (_a) {
+            return [];
+        }
     }
 }
 module.exports = Calculator;

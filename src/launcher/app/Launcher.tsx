@@ -1,5 +1,7 @@
 import * as React from "react"
 import Events from "../../electron/Events"
+import ThemeHandler from "./ThemeHandler"
+// import ThemeHandler from "./ThemeHandler"
 
 export interface Props {
 
@@ -30,6 +32,7 @@ export default class Launcher extends React.Component<Props, State> {
 
         let resultList: Array<{ description: string, title: string }> = getEventBus().sendSync(Events.ProcessInput, value)
 
+        console.debug(resultList)
 
         this.setState({ resultList })
 
@@ -39,6 +42,7 @@ export default class Launcher extends React.Component<Props, State> {
     render() {
         return (
             <div className="launcher">
+                <ThemeHandler />
                 <input className="search-input" onChange={this.handleChange.bind(this)} />
 
                 {this.showResults}
