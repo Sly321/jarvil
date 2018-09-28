@@ -15,6 +15,12 @@ export default class EventHandler {
         this.registerListeners()
     }
 
+    /**
+     *
+     *
+     * @private
+     * @memberof EventHandler
+     */
     private registerListeners() {
         Logger.info("register the eventlisteners")
         ipcMain.on(Events.OpenSettings, () => {
@@ -27,12 +33,9 @@ export default class EventHandler {
             event.returnValue = __dirname
         })
 
-        ipcMain.on("get.themes", (event: Electron.Event) => {
-            console.debug(`get.themes - called`)
-
+        ipcMain.on(Events.GetThemes, (event: Electron.Event) => {
+            Logger.info(`Event: Events.GetThemes`)
             const themes = ThemeLoader.getThemes()
-
-            console.debug(themes)
             event.returnValue = themes
         })
 
@@ -56,7 +59,11 @@ export default class EventHandler {
         ipcMain.on("resize", (event: Electron.Event, width: number, height: number) => {
             this.mainWindow.setSize(width, height)
             console.debug(`resize: width: ${width}, height: ${height}`)
+        })
 
+        ipcMain.on(Events.ActionExecuted, (event: Electron.Event, pluginName: string, input: string) => {
+            Logger.info(`Event: Events.ActionExecuted - Plugin: ${pluginName} - Input: ${input}`)
+            this.processor.executeAction(pluginName, input)
         })
     }
 }

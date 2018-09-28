@@ -6,5 +6,9 @@
     "url": "http://svenliebig.com"
   },
   "main": "index.ts",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "dependencies": {
+    "@types/mathjs": "^4.4.1",
+    "mathjs": "^5.1.2"
+  }
 }

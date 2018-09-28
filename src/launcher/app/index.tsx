@@ -11,7 +11,7 @@ const getEventBus = (): any => {
     return (window as any).ipcRenderer
 }
 
-console.log(getEventBus().sendSync("get.themes"))
+// console.log(getEventBus().sendSync("get.themes"))
 // console.log(getEventBus().sendSync("process.input", "hallo"))
 
 // document.getElementById("root").innerHTML = "ROOT TUT GUT<a href='https://google.com'>google</a>"

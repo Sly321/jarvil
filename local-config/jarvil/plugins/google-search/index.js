@@ -1,3 +1,5 @@
+const opn = require("opn")
+
 class GoogleSearchPlugin {
     static get trigger() {
         return "g"
@@ -9,6 +11,10 @@ class GoogleSearchPlugin {
             title: "GoogleSearchPlugin",
             description: args.join(" ")
         }]
+    }
+
+    static action(...input) {
+        opn(`https://www.google.com/search?q=${input.join("+")}`)
     }
 }
 
