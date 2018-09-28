@@ -5,6 +5,7 @@ import { ThemeLoader } from "./themes/ThemeLoader"
 import PluginLoader from "./plugins/PluginLoader"
 import Processor from "./Processor"
 import Logger from "./utils/Logger"
+import Preferences from "./preferences/Preferences"
 
 export default class EventHandler {
     private processor: Processor
@@ -33,20 +34,6 @@ export default class EventHandler {
             event.returnValue = __dirname
         })
 
-        ipcMain.on(Events.GetThemes, (event: Electron.Event) => {
-            Logger.info(`Event: Events.GetThemes`)
-            const themes = ThemeLoader.getThemes()
-            event.returnValue = themes
-        })
-
-        ipcMain.on("get.plugins", (event: Electron.Event) => {
-            console.debug(`get.themes - called`)
-
-            const plugins = PluginLoader.getPlugins()
-
-            console.debug(plugins)
-            event.returnValue = plugins
-        })
 
         ipcMain.on(Events.ProcessInput, (event: Electron.Event, input: string) => {
             console.debug(Events.ProcessInput, input)
@@ -64,6 +51,19 @@ export default class EventHandler {
         ipcMain.on(Events.ActionExecuted, (event: Electron.Event, pluginName: string, input: string) => {
             Logger.info(`Event: Events.ActionExecuted - Plugin: ${pluginName} - Input: ${input}`)
             this.processor.executeAction(pluginName, input)
+        })
+
+        /** Themes */
+
+        ipcMain.on(Events.GetThemes, (event: Electron.Event) => {
+            Logger.info(`Event: Events.GetThemes`)
+            const themes = ThemeLoader.getThemes()
+            event.returnValue = themes
+        })
+
+        ipcMain.on(Events.GetSelectedTheme, (event: Electron.Event) => {
+            Logger.info(`Event: Events.GetSelectedTheme`)
+            event.returnValue = Preferences.selectedTheme.name
         })
     }
 }

@@ -21,12 +21,9 @@ export default class Processor {
             }
         })
 
-        console.debug(result)
-
         return result
     }
 
-    // TODO implement
     public executeAction(pluginName: string, input: string): Promise<void> {
         console.log("Should Execute some Actions", input)
 
