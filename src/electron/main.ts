@@ -172,10 +172,19 @@ const menu = Menu.buildFromTemplate(template)
 function createWindow() {
     // Create the browser window.
     mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
+        minWidth: 600,
+        minHeight: 50,
+        width: 600,
+        height: 200,
+        resizable: false,
+        minimizable: false,
+        maximizable: false,
+        alwaysOnTop: true,
+        closable: false,
+        useContentSize: true,
         frame: false,
-        transparent: true
+        transparent: true,
+        fullscreenable: false
     })
 
     // and load the index.html of the app.
