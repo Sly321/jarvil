@@ -13,11 +13,13 @@ export default class Settings extends React.Component<Props, State> {
 
         this.state = {
         }
+
+
     }
 
     render() {
         return (
-            <div>{this.props.children}J</div>
+            <div>{this.props.children}</div>
         )
     }
 }

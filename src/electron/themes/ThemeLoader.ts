@@ -27,7 +27,7 @@ export class ThemeLoader {
      * @memberof ThemeLoader
      */
     private static get themesLocation(): string {
-        const homeDirectory = process.env.NODE_ENV === "development" ? resolve(dirname(require.main.filename), "..", "..", "local-config") : homedir()
+        const homeDirectory = FileSystem.getHomeDirectory()
         const resultDirectory = resolve(homeDirectory, "jarvil", "themes")
 
         if (!existsSync(resultDirectory)) {

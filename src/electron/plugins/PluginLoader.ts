@@ -168,7 +168,7 @@ export default class PluginLoader {
     }
 
     private static get pluginFolder() {
-        const homeDirectory = process.env.NODE_ENV === "development" ? resolve(dirname(require.main.filename), "..", "..", "local-config") : homedir()
+        const homeDirectory = FileSystem.getHomeDirectory()
         const resultDirectory = resolve(homeDirectory, "jarvil", "plugins")
 
         if (!existsSync(resultDirectory)) {

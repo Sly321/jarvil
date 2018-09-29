@@ -1,5 +1,6 @@
-import { isAbsolute, sep, resolve } from "path"
+import { isAbsolute, sep, resolve, dirname } from "path"
 import { mkdirSync } from "fs"
+import { homedir } from "os"
 
 export enum FileType {
     Unknown = "filetype/unknown",
@@ -45,7 +46,6 @@ export default class FileSystem {
         }, initDir);
     }
 
-
     public static getFileType(file: string): FileType {
         if (file.endsWith(".js")) {
             return FileType.JavaScript
@@ -53,5 +53,16 @@ export default class FileSystem {
             return FileType.TypeScript
         }
         return FileType.Unknown
+    }
+
+    /**
+     * Returns the home directory of the current user in production mode, else the root of this project.
+     *
+     * @static
+     * @returns {string}
+     * @memberof FileSystem
+     */
+    public static getHomeDirectory(): string {
+        return process.env.NODE_ENV === "development" ? resolve(dirname(require.main.filename), "..", "..", "local-config") : homedir()
     }
 }

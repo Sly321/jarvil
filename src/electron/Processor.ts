@@ -33,7 +33,7 @@ export default class Processor {
     }
 
     public executeAction(pluginName: string, input: string): Promise<void> {
-        console.log("Should Execute some Actions", input)
+        Logger.info(`Processor - executeAction - ${pluginName} - input`)
 
         const plugin = this.plugins.find(plugin => plugin.name === pluginName)
 
