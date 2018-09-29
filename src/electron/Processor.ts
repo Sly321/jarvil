@@ -47,6 +47,10 @@ export default class Processor {
     }
 
     private getInputWithoutTrigger(input: string, plugin: JarvilPluginInterface) {
+        const { length } = plugin.trigger
+        if (length === 0) {
+            return input
+        }
         return input.substring(plugin.trigger.length + 1)
     }
 }
