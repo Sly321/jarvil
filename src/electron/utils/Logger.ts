@@ -5,13 +5,12 @@
  * @class Logger
  */
 export default class Logger {
-
-    public static info(...messages: Array<string>): void {
-        console.info("[INFO]", Logger.timeStamp, ...messages)
-    }
-
     public static log(msg: string) {
         console.log(msg)
+    }
+
+    public static info(...messages: Array<string>): void {
+        console.info("[INFO]", `[${Logger.timeStamp}]`, ...messages)
     }
 
     public static warn(...messages: Array<string>): void {
@@ -23,6 +22,7 @@ export default class Logger {
     }
 
     private static get timeStamp(): string {
-        return new Date().toLocaleDateString()
+        const t = new Date()
+        return `${t.toLocaleDateString()} - ${t.toLocaleTimeString()}`
     }
 }

@@ -6,7 +6,6 @@ class GoogleSearchPlugin {
     }
 
     static getResultItems(...args) {
-        console.debug(`GoogleSearchPlugin`, "eingabe")
         return [{
             title: "GoogleSearchPlugin",
             description: args.join(" ")

@@ -1,7 +1,7 @@
 const math = require('mathjs');
 class Calculator {
     static get trigger() {
-        return "c";
+        return "";
     }
     static getResultItems(...args) {
         try {
