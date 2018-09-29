@@ -1,7 +1,7 @@
 import * as React from "react"
 import Events from "../../electron/Events"
 import ThemeHandler from "./ThemeHandler"
-import ServiceFactory from "./ServiceFactory"
+import ServiceFactory from "../../shared-frontend/ServiceFactory"
 
 export interface Props {
 }

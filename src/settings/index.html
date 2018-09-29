@@ -2,12 +2,25 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title>Hello World!</title>
+    <meta charset="UTF-8">
+    <title>Jarvil Settings</title>
 </head>
 
 <body>
-	<h1>Settings Window</h1>
+    <div id="root"></div>
+
+    <script>
+        (function (window) {
+            const {
+                ipcRenderer
+            } = require('electron');
+            window.ipcRenderer = ipcRenderer;
+        })(window);
+
+        if (process.env.NODE_ENV === 'development') {
+            document.write('<script defer src=\"http://localhost:1112/build/settings.js"><\/script>')
+        }
+    </script>
 </body>
 
 </html>

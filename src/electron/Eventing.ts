@@ -44,8 +44,11 @@ export default class EventHandler {
         })
 
         ipcMain.on("resize", (event: Electron.Event, { height, width }: { height: number, width: number }) => {
-            this.mainWindow.setSize(600, height)
-            console.debug(`resize: width: ${width}, height: ${height}`)
+            const rect = this.mainWindow.getBounds()
+            if (rect.height !== height) {
+                console.debug(`resize: width: ${width}, height: ${height}`)
+                this.mainWindow.setSize(600, height)
+            }
         })
 
         ipcMain.on(Events.ActionExecuted, (event: Electron.Event, pluginName: string, input: string) => {

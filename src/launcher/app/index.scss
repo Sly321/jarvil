@@ -1,5 +1,6 @@
-$color-body: rgba(7, 70, 165, 0.0);
+// $color-body: rgba(7, 70, 165, 0.0);
 
+// General
 * {
     box-sizing: border-box;
 }
@@ -12,12 +13,10 @@ html, body {
 
 body {
     width: 100%;
-    background-color: $color-body;
+    // background-color: $color-body;
 }
 
-
-
-
+// Laucner
 #root {
  width: 100%;
 }
@@ -28,6 +27,7 @@ body {
     justify-content: center;
     align-items: center;
     display: flex;
+
     .search-input,.result-list  {
         order: 0;
         flex-grow: 1;
@@ -45,17 +45,9 @@ body {
 
     .result-list {
         list-style-type: none;
-        padding: 4px;
-        background-color: rgba(255, 182, 47, 0.288);
-
-        .active {
-            background-color: #ff0000;
-        }
+        padding: 0px;
     }
-
-
 }
-
 
 input {
     -webkit-app-region: no-drag;

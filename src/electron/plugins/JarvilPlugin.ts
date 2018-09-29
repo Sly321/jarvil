@@ -1,6 +1,7 @@
 import { ResultItem } from "../Processor"
+import JarvilPluginInterface from "./JarvilPluginInterface"
 
-export default class JarvilPlugin {
+export default class JarvilPlugin implements JarvilPluginInterface {
     /**
      * the unique plugin name
      *
@@ -11,8 +12,6 @@ export default class JarvilPlugin {
 
     // version: string
     // trigger: string | Array<string>
-
-
 
     constructor(
         public name: string,

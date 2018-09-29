@@ -6,6 +6,8 @@ import JarvilPlugin from "./JarvilPlugin"
 import Logger from "../utils/Logger"
 
 import ts, { ModuleKind, ModuleResolutionKind } from "typescript"
+import JarvilSystemPlugin from "./JarvilSystemPlugin"
+import JarvilPluginInterface from "./JarvilPluginInterface"
 
 type PluginPackageJson = {
     main: string
@@ -35,9 +37,9 @@ export default class PluginLoader {
      * @returns {Array<JarvilPlugin>}
      * @memberof PluginLoader
      */
-    public static getPlugins(): Array<JarvilPlugin> {
+    public static getPlugins(): Array<JarvilPluginInterface> {
         const pluginFolder = PluginLoader.pluginFolder
-        const result: Array<JarvilPlugin> = []
+        const result: Array<JarvilPluginInterface> = [new JarvilSystemPlugin()]
 
         // Read all Files and Folders inside the plugin directory
         const filesOrFolders = readdirSync(pluginFolder)
@@ -81,10 +83,8 @@ export default class PluginLoader {
                 }
             } else if (type === FileType.TypeScript) {
                 const outputPath = pluginIndexPath.replace(".ts", ".js")
-                // Logger.info("<<< TypeScript angezogen, wird noch nicht geladen. >>>")
                 const host = ts.createCompilerHost({})
                 const fileInput = host.readFile(pluginIndexPath)
-                // const program = ts.createProgram([pluginIndexPath], {})
                 const trans = ts.transpileModule(fileInput, { compilerOptions: options })
                 writeFileSync(outputPath, trans.outputText)
 
@@ -99,7 +99,6 @@ export default class PluginLoader {
                     Logger.error(`Problem while importing plugin ${pluginIndexPath}, exception:\n${e}`)
                     return
                 }
-                // Logger.info("Loaded: ", importedClass, "from", outputPath)
             } else {
                 Logger.warn(`Unknown filetype in:\n\t- ${pluginIndexPath}\nwhile loading the plugin.\nSupported filetypes are .js | .ts`)
                 return

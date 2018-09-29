@@ -1,4 +1,4 @@
-import JarvilPlugin from "./plugins/JarvilPlugin"
+import JarvilPluginInterface from "./plugins/JarvilPluginInterface"
 import Logger from "./utils/Logger"
 
 export interface ResultItem {
@@ -7,14 +7,22 @@ export interface ResultItem {
 }
 
 export default class Processor {
-    constructor(private plugins: Array<JarvilPlugin>) { }
+    constructor(private plugins: Array<JarvilPluginInterface>) { }
 
     public getResultItems(input: string): Array<ResultItem> {
         const result: Array<ResultItem> = []
 
+        const triggerword = input.split(" ")[0]
+
+        const triggeredPlugin = this.plugins.find(plugin => plugin.trigger === triggerword)
+
+        if (triggeredPlugin) {
+            return triggeredPlugin.getResultItems(this.getInputWithoutTrigger(input, triggeredPlugin))
+        }
+
         this.plugins.forEach(plugin => {
             try {
-                const resultitems = plugin.getResultItems(input)
+                const resultitems = plugin.getResultItems(this.getInputWithoutTrigger(input, plugin))
                 result.push(...resultitems)
             } catch (e) {
                 Logger.error(`Error while parsing the resultItems of ${plugin.name}:\n\t${e}`)
@@ -33,8 +41,12 @@ export default class Processor {
             Logger.error(`Could not find plugin: ${pluginName} to execute action goal on ${input}`)
         }
 
-        plugin.action(input.substring(plugin.trigger.length + 1))
+        plugin.action(this.getInputWithoutTrigger(input, plugin))
 
         return Promise.resolve()
+    }
+
+    private getInputWithoutTrigger(input: string, plugin: JarvilPluginInterface) {
+        return input.substring(plugin.trigger.length + 1)
     }
 }

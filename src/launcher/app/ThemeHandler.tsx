@@ -1,6 +1,6 @@
 import * as React from "react"
 import Events from "../../electron/Events"
-import ServiceFactory from "./ServiceFactory"
+import ServiceFactory from "../../shared-frontend/ServiceFactory"
 import { Helmet } from "react-helmet"
 
 
