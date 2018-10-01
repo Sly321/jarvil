@@ -1,4 +1,5 @@
 import * as React from "react"
+import PluginsList from "./PluginsList"
 
 export interface Props {
     children?: React.ReactNode
@@ -13,13 +14,23 @@ export default class Settings extends React.Component<Props, State> {
 
         this.state = {
         }
-
-
     }
 
     render() {
         return (
-            <div>{this.props.children}</div>
+            <>
+                <h1>Preferences</h1>
+                <nav>
+                    <ul>
+                        <li className="">General</li>
+                        <li className="active">Plugins</li>
+                        <li className="">Themes</li>
+                    </ul>
+                </nav>
+                <main>
+                    <PluginsList />
+                </main>
+            </>
         )
     }
 }

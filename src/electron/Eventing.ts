@@ -9,10 +9,12 @@ import Preferences from "./preferences/Preferences"
 
 export default class EventHandler {
     private processor: Processor
+    private preferences: Preferences
 
     constructor(private mainWindow: BrowserWindow) {
         const plugins = PluginLoader.getPlugins()
         this.processor = new Processor(plugins)
+        this.preferences = new Preferences()
         this.registerListeners()
     }
 
@@ -46,7 +48,7 @@ export default class EventHandler {
         ipcMain.on("resize", (event: Electron.Event, { height, width }: { height: number, width: number }) => {
             const rect = this.mainWindow.getBounds()
             if (rect.height !== height) {
-                console.debug(`resize: width: ${width}, height: ${height}`)
+                Logger.info(`Event: Resize - width: ${width}, height: ${height}`)
                 this.mainWindow.setSize(600, height)
             }
         })
@@ -54,6 +56,14 @@ export default class EventHandler {
         ipcMain.on(Events.ActionExecuted, (event: Electron.Event, pluginName: string, input: string) => {
             Logger.info(`Event: Events.ActionExecuted - Plugin: ${pluginName} - Input: ${input}`)
             this.processor.executeAction(pluginName, input)
+        })
+
+        /** Plugins */
+
+        ipcMain.on(Events.GetPlugins, (event: Electron.Event) => {
+            Logger.info(`Event: Events.GetPlugins`)
+            const themes = this.processor.getPlugins()
+            event.returnValue = themes
         })
 
         /** Themes */
@@ -66,7 +76,7 @@ export default class EventHandler {
 
         ipcMain.on(Events.GetSelectedTheme, (event: Electron.Event) => {
             Logger.info(`Event: Events.GetSelectedTheme`)
-            event.returnValue = Preferences.selectedTheme.name
+            event.returnValue = this.preferences.selectedTheme.name
         })
     }
 }
