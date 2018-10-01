@@ -1,22 +1,25 @@
-// $color-body: rgba(7, 70, 165, 0.0);
+$color-body: rgba(7, 70, 165, 0.0);
 
-// General
 * {
     box-sizing: border-box;
+}
+
+html {
+    font-family:  sans-serif;
 }
 
 html, body {
     -webkit-app-region: drag;
     margin: 0;
     height: 100%;
+    overflow-y: hidden
 }
 
 body {
     width: 100%;
-    // background-color: $color-body;
+    background-color: $color-body;
 }
 
-// Laucner
 #root {
  width: 100%;
 }
@@ -27,7 +30,6 @@ body {
     justify-content: center;
     align-items: center;
     display: flex;
-
     .search-input,.result-list  {
         order: 0;
         flex-grow: 1;
@@ -45,9 +47,18 @@ body {
 
     .result-list {
         list-style-type: none;
-        padding: 0px;
+        padding: 4px;
+        background-color: rgba(255, 182, 47, 0.288);
+
+        .active {
+            background-color: #ffffff5d;
+
+        }
     }
+
+
 }
+
 
 input {
     -webkit-app-region: no-drag;
