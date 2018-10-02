@@ -78,9 +78,35 @@ body {
     main {
         padding: $default-padding;
         color: black;
+        display: flex;
     }
 }
 
-iframe {outline: none;
+iframe {
+    outline: none;
     border: none;
-    float: right;}
+    float: right;
+}
+
+ul.theme-list {
+    margin: 0;
+    padding: 0;
+    flex-grow: 1;
+    border-right: 5px solid $background;
+
+    li {
+        list-style: none;
+        padding: 0.5rem;
+        cursor: pointer;
+
+        &.active {
+            color: $text;
+            background: $light;
+        }
+
+        &:hover {
+            color: $text;
+            background: $primary;
+        }
+    }
+}

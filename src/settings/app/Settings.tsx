@@ -15,7 +15,7 @@ export default class Settings extends React.Component<Props, State> {
         super(props)
 
         this.state = {
-            activeIndex: 0
+            activeIndex: 2
         }
     }
 

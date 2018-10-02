@@ -9,6 +9,7 @@ export interface Props {
 
 export interface State {
     themes: Array<Theme>
+    selected: Theme | null
 }
 
 const standardCssString = `
@@ -63,23 +64,38 @@ export default class ThemesList extends React.Component<Props, State> {
         super(props)
 
         this.state = {
-            themes: []
+            themes: [],
+            selected: null
         }
     }
 
     componentDidMount() {
-        const themes = ServiceFactory.Eventbus.sendSync(Events.GetThemes)
-        this.setState({ themes })
+        const themes = ServiceFactory.Eventbus.sendSync(Events.GetThemes) as Array<Theme>
+        const selected = ServiceFactory.Eventbus.sendSync(Events.GetSelectedTheme) as string
+        this.setState({ themes, selected: themes.find((theme: Theme) => theme.name === selected) })
+    }
+
+    private handleThemeSelection(selected: Theme) {
+        this.setState({ selected })
     }
 
     render() {
-        return <>
-            {this.state.themes.map(theme => theme.name)}
-            <iframe width={400} height={193} srcDoc={`<html>
+        if (this.state.selected !== null) {
+            return <>
+                <ul className="theme-list">
+                    {this.state.themes.map(theme => <li
+                        className={theme.name === this.state.selected.name ? "active" : ""}
+                        key={theme.name}
+                        onClick={this.handleThemeSelection.bind(this, theme)}
+                    >
+                        {theme.name}
+                    </li>)}
+                </ul>
+                <iframe width={400} height={193} srcDoc={`<html>
                     <head>
                         <style>
                             ${standardCssString}
-                            ${this.state.themes.map(theme => theme.css)}
+                            ${this.state.selected.css}
                         </style>
                     </head>
                     <body>
@@ -94,6 +110,8 @@ export default class ThemesList extends React.Component<Props, State> {
                         </div>
                     </body>
             </html>` } />
-        </>
+            </>
+        }
+        return <span>Loading...</span>
     }
 }

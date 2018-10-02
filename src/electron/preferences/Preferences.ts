@@ -18,7 +18,7 @@ export default class Preferences {
     }
 
     public get selectedTheme(): Theme {
-        const defaultTheme = new Theme("default", "")
+        const defaultTheme = new Theme("default.css", "")
         return defaultTheme
     }
 
