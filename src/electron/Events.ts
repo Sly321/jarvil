@@ -7,7 +7,9 @@ const Events = {
     GetPlugins: "get.plugins",
     // Themes
     GetThemes: "get.themes",
-    GetSelectedTheme: "get.selected.themes"
+    GetSelectedTheme: "get.selected.theme",
+    SetSelectedTheme: "set.selected.theme",
+    ReloadLauncherTheme: "reload.launcher.theme"
 }
 
 export default Events

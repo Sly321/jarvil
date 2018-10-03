@@ -6,6 +6,7 @@ import PluginLoader from "./plugins/PluginLoader"
 import Processor from "./Processor"
 import Logger from "./utils/Logger"
 import Preferences from "./preferences/Preferences"
+import Theme from "./themes/Theme"
 
 export default class EventHandler {
     private processor: Processor
@@ -67,7 +68,6 @@ export default class EventHandler {
         })
 
         /** Themes */
-
         ipcMain.on(Events.GetThemes, (event: Electron.Event) => {
             Logger.info(`Event: Events.GetThemes`)
             const themes = ThemeLoader.getThemes()
@@ -76,7 +76,17 @@ export default class EventHandler {
 
         ipcMain.on(Events.GetSelectedTheme, (event: Electron.Event) => {
             Logger.info(`Event: Events.GetSelectedTheme`)
-            event.returnValue = this.preferences.selectedTheme.name
+            const themes = ThemeLoader.getThemes()
+            const selected = themes.find(theme => theme.name === this.preferences.selectedTheme)
+            event.returnValue = selected || null
+        })
+
+        ipcMain.on(Events.SetSelectedTheme, (event: Electron.Event, theme: Theme) => {
+            Logger.info(`Event: Events.SetSelectedTheme`)
+            this.preferences.selectedTheme = theme.name
+
+            // TODO, send event from 1 window to another. this works when triggered in main, but not in settings
+            event.sender.send(Events.ReloadLauncherTheme)
         })
     }
 }

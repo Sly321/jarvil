@@ -16,11 +16,17 @@ export default class ThemeHandler extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props)
 
-        const themes = ServiceFactory.Eventbus.sendSync(Events.GetThemes)
         const selected = ServiceFactory.Eventbus.sendSync(Events.GetSelectedTheme)
 
+        // register event
+        ServiceFactory.Eventbus.on(Events.ReloadLauncherTheme, () => {
+            console.debug(`Event: Events.ReloadLauncherTheme`)
+            const selected = ServiceFactory.Eventbus.sendSync(Events.GetSelectedTheme)
+            this.setState({ style: selected.css })
+        })
+
         this.state = {
-            style: themes.length === 1 ? themes[0].css : ""
+            style: selected.css
         }
     }
 

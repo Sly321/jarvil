@@ -71,12 +71,16 @@ export default class ThemesList extends React.Component<Props, State> {
 
     componentDidMount() {
         const themes = ServiceFactory.Eventbus.sendSync(Events.GetThemes) as Array<Theme>
-        const selected = ServiceFactory.Eventbus.sendSync(Events.GetSelectedTheme) as string
-        this.setState({ themes, selected: themes.find((theme: Theme) => theme.name === selected) })
+        const selected = ServiceFactory.Eventbus.sendSync(Events.GetSelectedTheme) as Theme
+        this.setState({ themes, selected: themes.find((theme: Theme) => theme.name === selected.name) })
     }
 
     private handleThemeSelection(selected: Theme) {
         this.setState({ selected })
+    }
+
+    private handleSaveTheme() {
+        ServiceFactory.Eventbus.sendAsync(Events.SetSelectedTheme, this.state.selected)
     }
 
     render() {
@@ -110,6 +114,9 @@ export default class ThemesList extends React.Component<Props, State> {
                         </div>
                     </body>
             </html>` } />
+                <div>
+                    <button onClick={this.handleSaveTheme.bind(this)}>Save</button>
+                </div>
             </>
         }
         return <span>Loading...</span>

@@ -7,6 +7,13 @@ export default class Eventbus {
         return this.ipcRenderer.sendSync(event, ...args)
     }
 
+    public on(event: string, listener: (...args: Array<any>) => void): any {
+        return this.ipcRenderer.on(event, (...args: Array<any>) => {
+            console.debug(`listening!!!`)
+            listener(args)
+        })
+    }
+
     private get ipcRenderer() {
         return (window as any).ipcRenderer
     }
