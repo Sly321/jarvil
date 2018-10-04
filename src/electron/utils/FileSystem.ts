@@ -63,6 +63,7 @@ export default class FileSystem {
      * @memberof FileSystem
      */
     public static getHomeDirectory(): string {
+        console.debug("env", process.env.NODE_ENV)
         return process.env.NODE_ENV === "development" ? resolve(dirname(require.main.filename), "..", "..", "local-config") : homedir()
     }
 }

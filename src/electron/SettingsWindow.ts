@@ -9,32 +9,33 @@ export let SettingsWindow: BrowserWindow
  *
  */
 const createSettingsWindow = function (parent?: BrowserWindow) {
-	SettingsWindow = new BrowserWindow({
-		width: 800,
-		height: 600,
-		parent,
-		modal: true,
-		minimizable: false,
-		maximizable: false
-	})
+    SettingsWindow = new BrowserWindow({
+        width: 800,
+        height: 600,
+        parent,
+        modal: true,
+        minimizable: false,
+        maximizable: false
+    })
 
-	// and load the index.html of the app.
-	// SettingsWindow.loadFile('index.html')
-	SettingsWindow.loadURL(url.format({
-		pathname: process.env.NODE_ENV === "development" ? paths.settingsIndex : paths.settingsTargetIndex,
-		protocol: 'file:',
-		slashes: true,
-	}))
+    // and load the index.html of the app.
+    // SettingsWindow.loadFile('index.html')
+    SettingsWindow.loadURL(url.format({
+        pathname: process.env.NODE_ENV === "development" ? paths.settingsIndex : paths.settingsTargetIndex,
+        protocol: 'file:',
+        slashes: true,
+    }))
 
-	SettingsWindow.setMenuBarVisibility(false)
+    SettingsWindow.setMenuBarVisibility(false)
+    SettingsWindow.webContents.openDevTools()
 
-	// if (process.env.NODE_ENV === 'development') {
-	// SettingsWindow.webContents.openDevTools();
-	//   }
+    // if (process.env.NODE_ENV === 'development') {
+    // SettingsWindow.webContents.openDevTools();
+    //   }
 
-	SettingsWindow.on('closed', function () {
-		SettingsWindow = null
-	})
+    SettingsWindow.on('closed', function () {
+        SettingsWindow = null
+    })
 }
 
 export default createSettingsWindow

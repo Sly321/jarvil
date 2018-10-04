@@ -32,6 +32,10 @@ export default class Processor {
         return result
     }
 
+    public getPlugins(): Array<JarvilPluginInterface> {
+        return this.plugins
+    }
+
     public executeAction(pluginName: string, input: string): Promise<void> {
         Logger.info(`Processor - executeAction - ${pluginName} - input`)
 
@@ -39,6 +43,7 @@ export default class Processor {
 
         if (!plugin) {
             Logger.error(`Could not find plugin: ${pluginName} to execute action goal on ${input}`)
+            return
         }
 
         plugin.action(this.getInputWithoutTrigger(input, plugin))

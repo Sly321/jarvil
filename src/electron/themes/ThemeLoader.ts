@@ -11,7 +11,12 @@ export class ThemeLoader {
 
         if (themeFolder) {
             const files = readdirSync(themeFolder)
-            return files.map(file => new Theme(file, readFileSync(resolve(themeFolder, file), "utf8")))
+            Logger.info("themes", themeFolder, files.length.toString(), files.toString())
+            return files.map(file => {
+                const name = file.slice(0, file.length - 4)
+                Logger.info(`Successfully imported theme: ${name}`)
+                return new Theme(name, readFileSync(resolve(themeFolder, file), "utf8"))
+            })
         }
 
         return []

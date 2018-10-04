@@ -6,13 +6,16 @@ import PluginLoader from "./plugins/PluginLoader"
 import Processor from "./Processor"
 import Logger from "./utils/Logger"
 import Preferences from "./preferences/Preferences"
+import Theme from "./themes/Theme"
 
 export default class EventHandler {
     private processor: Processor
+    private preferences: Preferences
 
     constructor(private mainWindow: BrowserWindow) {
         const plugins = PluginLoader.getPlugins()
         this.processor = new Processor(plugins)
+        this.preferences = new Preferences()
         this.registerListeners()
     }
 
@@ -46,7 +49,7 @@ export default class EventHandler {
         ipcMain.on("resize", (event: Electron.Event, { height, width }: { height: number, width: number }) => {
             const rect = this.mainWindow.getBounds()
             if (rect.height !== height) {
-                console.debug(`resize: width: ${width}, height: ${height}`)
+                Logger.info(`Event: Resize - width: ${width}, height: ${height}`)
                 this.mainWindow.setSize(600, height)
             }
         })
@@ -56,8 +59,15 @@ export default class EventHandler {
             this.processor.executeAction(pluginName, input)
         })
 
-        /** Themes */
+        /** Plugins */
 
+        ipcMain.on(Events.GetPlugins, (event: Electron.Event) => {
+            Logger.info(`Event: Events.GetPlugins`)
+            const themes = this.processor.getPlugins()
+            event.returnValue = themes
+        })
+
+        /** Themes */
         ipcMain.on(Events.GetThemes, (event: Electron.Event) => {
             Logger.info(`Event: Events.GetThemes`)
             const themes = ThemeLoader.getThemes()
@@ -66,7 +76,17 @@ export default class EventHandler {
 
         ipcMain.on(Events.GetSelectedTheme, (event: Electron.Event) => {
             Logger.info(`Event: Events.GetSelectedTheme`)
-            event.returnValue = Preferences.selectedTheme.name
+            const themes = ThemeLoader.getThemes()
+            const selected = themes.find(theme => theme.name === this.preferences.selectedTheme)
+            event.returnValue = selected || null
+        })
+
+        ipcMain.on(Events.SetSelectedTheme, (event: Electron.Event, theme: Theme) => {
+            Logger.info(`Event: Events.SetSelectedTheme`)
+            this.preferences.selectedTheme = theme.name
+
+            // TODO, send event from 1 window to another. this works when triggered in main, but not in settings
+            event.sender.send(Events.ReloadLauncherTheme)
         })
     }
 }

@@ -1,0 +1,41 @@
+.launcher {
+    /* background-color: #92c46d; */
+    background: #a8d18a;
+    color: #1d344e;
+    padding: 0 5px;
+}
+
+/* Input Component */
+.launcher input.search-input {
+    font-size: 33px;
+    background: transparent;
+    outline: none;
+    border: none;
+    padding: 28px 18px;
+    color: #1d344e;
+    border-bottom: 1px solid #539699;
+    margin-bottom: 4px;
+}
+
+/* Result List Warraper */
+.launcher ul.result-list {
+    background: transparent;
+}
+
+/* Result List Items */
+.launcher ul.result-list li {
+    color: #1d344e;
+    font-size: 30px;
+    padding: 15px;
+    cursor: pointer;
+}
+
+.launcher ul.result-list li.active {
+    background: #1d344e;
+    color: #92c46d;
+}
+
+.launcher ul.result-list li:hover {
+    background: #92c46d;
+    color: #475d6f;
+}
