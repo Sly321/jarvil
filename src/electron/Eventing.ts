@@ -3,7 +3,7 @@ import createSettingsWindow from "./SettingsWindow"
 import Events from "./Events"
 import { ThemeLoader } from "./themes/ThemeLoader"
 import PluginLoader from "./plugins/PluginLoader"
-import Processor from "./Processor"
+import Processor, { ActionObject } from "./Processor"
 import Logger from "./utils/Logger"
 import Preferences from "./preferences/Preferences"
 import Theme from "./themes/Theme"
@@ -54,9 +54,9 @@ export default class EventHandler {
             }
         })
 
-        ipcMain.on(Events.ActionExecuted, (event: Electron.Event, pluginName: string, input: string) => {
-            Logger.info(`Event: Events.ActionExecuted - Plugin: ${pluginName} - Input: ${input}`)
-            this.processor.executeAction(pluginName, input)
+        ipcMain.on(Events.ActionExecuted, (event: Electron.Event, actionObject: ActionObject) => {
+            Logger.info(`Event: Events.ActionExecuted - Plugin: ${actionObject.name} - Input: ${actionObject.input} - ActionId: ${actionObject.actionId}`)
+            this.processor.executeAction(actionObject)
         })
 
         /** Plugins */

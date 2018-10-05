@@ -5,9 +5,9 @@ import Logger from "../utils/Logger"
 import JarvilPluginInterface from "./JarvilPluginInterface"
 
 export enum JarvilSystemPluginAction {
-    Settings = "settings",
-    Close = "close",
-    Exit = "exit"
+    Settings = "jarvil/settings",
+    Close = "jarvil/close",
+    Exit = "jarvil/exit"
 }
 
 export default class JarvilSystemPlugin implements JarvilPluginInterface {
@@ -15,7 +15,7 @@ export default class JarvilSystemPlugin implements JarvilPluginInterface {
     public version: string = "1.0.0"
     public trigger: string = "jarvil"
 
-    public action(...args: Array<string>): void {
+    public action(actionId: string, ...args: Array<string>): void {
         Logger.info(`${this.name} - action triggered`, ...args)
 
         let action: string = null
@@ -23,9 +23,13 @@ export default class JarvilSystemPlugin implements JarvilPluginInterface {
             action = args[0]
         }
 
-        switch (action) {
+        switch (actionId) {
             case JarvilSystemPluginAction.Settings:
                 ipcMain.emit(Events.OpenSettings)
+                break
+            case JarvilSystemPluginAction.Close:
+            case JarvilSystemPluginAction.Exit:
+                process.exit()
             default:
                 break
         }
@@ -66,10 +70,10 @@ export default class JarvilSystemPlugin implements JarvilPluginInterface {
     }
 
     private static get settingsResultItem(): ResultItem {
-        return { title: "Jarvil", description: "Open Settings", name: "jarvil-system-plugin" }
+        return { title: "Jarvil", description: "Open Settings", name: "jarvil-system-plugin", actionId: JarvilSystemPluginAction.Settings }
     }
 
     private static get closeResultItem(): ResultItem {
-        return { title: "Jarvil", description: "Close Jarvil", name: "jarvil-system-plugin" }
+        return { title: "Jarvil", description: "Close Jarvil", name: "jarvil-system-plugin", actionId: JarvilSystemPluginAction.Close }
     }
 }
