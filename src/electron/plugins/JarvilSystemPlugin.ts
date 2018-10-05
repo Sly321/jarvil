@@ -66,10 +66,10 @@ export default class JarvilSystemPlugin implements JarvilPluginInterface {
     }
 
     private static get settingsResultItem(): ResultItem {
-        return { title: "Jarvil", description: "Open Settings" }
+        return { title: "Jarvil", description: "Open Settings", name: "jarvil-system-plugin" }
     }
 
     private static get closeResultItem(): ResultItem {
-        return { title: "Jarvil", description: "Close Jarvil" }
+        return { title: "Jarvil", description: "Close Jarvil", name: "jarvil-system-plugin" }
     }
 }

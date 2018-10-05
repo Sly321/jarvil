@@ -14,7 +14,8 @@ class Calculator {
 
             return [{
                 title: "Calc",
-                description: result
+                description: result,
+                name: "calculator"
             }];
         } catch {
             return []

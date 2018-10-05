@@ -8,7 +8,8 @@ class GoogleSearchPlugin {
     static getResultItems(...args) {
         return [{
             title: "GoogleSearchPlugin",
-            description: args.join(" ")
+            description: args.join(" "),
+            name: "google-search"
         }]
     }
 
