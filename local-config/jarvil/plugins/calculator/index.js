@@ -11,8 +11,8 @@ class Calculator {
                 return [];
             }
             return [{
-                    title: "Calc",
-                    description: result,
+                    title: result,
+                    description: "calculator",
                     name: "calculator",
                     image: path.resolve(__dirname, "logo.svg")
                 }];

@@ -2,6 +2,8 @@ import { ResultItem } from "../Processor"
 import JarvilPluginInterface from "./JarvilPluginInterface"
 
 export default class JarvilPlugin implements JarvilPluginInterface {
+    public exact: boolean
+
     /**
      * the unique plugin name
      *
@@ -18,8 +20,11 @@ export default class JarvilPlugin implements JarvilPluginInterface {
         public version: string,
         public trigger: string,
         private resultItemsGetter: (...args: Array<string>) => Array<ResultItem>,
-        private actionListener: (...args: Array<string>) => void
-    ) { }
+        private actionListener: (...args: Array<string>) => void,
+        exact: boolean
+    ) {
+        this.exact = !!exact
+    }
 
     public getResultItems(...args: Array<string>): Array<ResultItem> {
         return this.resultItemsGetter(...args)

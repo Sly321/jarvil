@@ -2,7 +2,7 @@
     /* background-color: #92c46d; */
     background: #a8d18a;
     color: #1d344e;
-    padding: 0 5px;
+    /* padding: 0 5px; */
 }
 
 /* Input Component */
@@ -11,7 +11,7 @@
     background: transparent;
     outline: none;
     border: none;
-    padding: 28px 18px;
+    padding: 28px 0px;
     color: #1d344e;
     border-bottom: 1px solid #539699;
     margin-bottom: 4px;
