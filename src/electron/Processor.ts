@@ -2,11 +2,14 @@ import JarvilPluginInterface from "./plugins/JarvilPluginInterface"
 import Logger from "./utils/Logger"
 
 export interface ResultItem {
+    actionId: string
     title: string
     description: string
     name: string
     image?: string
 }
+
+export interface ActionObject { name: string, actionId: string, input: string }
 
 export default class Processor {
     constructor(private plugins: Array<JarvilPluginInterface>) { }
@@ -38,17 +41,17 @@ export default class Processor {
         return this.plugins
     }
 
-    public executeAction(pluginName: string, input: string): Promise<void> {
-        Logger.info(`Processor - executeAction - ${pluginName} - ${input}`)
+    public executeAction(actionObject: ActionObject): Promise<void> {
+        Logger.info(`Processor - executeAction - ${actionObject.name} - ${actionObject.input}`)
 
-        const plugin = this.plugins.find(plugin => plugin.name === pluginName)
+        const plugin = this.plugins.find(plugin => plugin.name === actionObject.name)
 
         if (!plugin) {
-            Logger.error(`Could not find plugin: ${pluginName} to execute action goal on ${input}`)
+            Logger.error(`Could not find plugin: ${actionObject.name} to execute action goal on ${actionObject.input}`)
             return
         }
 
-        plugin.action(this.getInputWithoutTrigger(input, plugin))
+        plugin.action(actionObject.actionId, this.getInputWithoutTrigger(actionObject.input, plugin))
 
         return Promise.resolve()
     }

@@ -9,11 +9,12 @@ class GoogleSearchPlugin {
         return [{
             title: "GoogleSearchPlugin",
             description: args.join(" "),
-            name: "google-search"
+            name: "google-search",
+            actionId: ""
         }]
     }
 
-    static action(...input) {
+    static action(actionId, ...input) {
         opn(`https://www.google.com/search?q=${input.join("+")}`)
     }
 }

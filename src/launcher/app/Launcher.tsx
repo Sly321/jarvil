@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import Events from "../../electron/Events"
+import { ResultItem, ActionObject } from "../../electron/Processor"
 import ThemeHandler from "./ThemeHandler"
 import ServiceFactory from "../../shared-frontend/ServiceFactory"
 import ResultList from "./ResultList"
@@ -9,7 +10,8 @@ export interface Props {
 
 export interface State {
     activeIndex: number
-    resultList: Array<{ description: string, title: string }>
+    resultList: Array<ResultItem>,
+    inputValue: string
 }
 
 
@@ -33,6 +35,7 @@ export default class Launcher extends Component<Props, State> {
     private initState(): State {
         return {
             activeIndex: 0,
+            inputValue: "",
             resultList: []
         }
     }
@@ -43,8 +46,8 @@ export default class Launcher extends Component<Props, State> {
         let state: State
 
         if (value !== "") {
-            const resultList: Array<{ description: string, title: string }> = ServiceFactory.Eventbus.sendSync(Events.ProcessInput, value)
-            state = { resultList, activeIndex: 0 }
+            const resultList: Array<ResultItem> = ServiceFactory.Eventbus.sendSync(Events.ProcessInput, value)
+            state = { resultList, activeIndex: 0, inputValue: value }
         } else {
             state = this.initState()
         }
@@ -80,7 +83,12 @@ export default class Launcher extends Component<Props, State> {
         const { activeIndex, resultList } = this.state
         const result = resultList[activeIndex]
         console.log(`${result.title} - ${result.description}`)
-        ServiceFactory.Eventbus.sendSync(Events.ActionExecuted, result.title, result.description)
+        const actionObject: ActionObject = {
+            actionId: result.actionId,
+            name: result.name,
+            input: this.state.inputValue
+        }
+        ServiceFactory.Eventbus.sendAsync(Events.ActionExecuted, actionObject)
     }
 
     private moveUp(): void {
@@ -104,7 +112,7 @@ export default class Launcher extends Component<Props, State> {
         return (
             <div className="launcher">
                 <ThemeHandler />
-                <input className="search-input" tabIndex={0} onChange={this.handleChange.bind(this)} onKeyDown={this.handleKeyDown.bind(this)} />
+                <input className="search-input" tabIndex={0} onChange={this.handleChange.bind(this)} onKeyDown={this.handleKeyDown.bind(this)} value={this.state.inputValue} />
                 <ResultList resultList={this.state.resultList} activeIndex={this.state.activeIndex} />
             </div>
         )
