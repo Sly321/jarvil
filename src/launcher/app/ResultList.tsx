@@ -1,26 +1,14 @@
 import * as React from "react"
+import { ResultItem } from "../../electron/Processor"
 
 export interface Props {
     children?: React.ReactNode
-    resultList: Array<{ description: string, title: string }>
+    resultList: Array<ResultItem>
     activeIndex: number
 
 }
 
-export interface State {
-}
-
-export default class ResultList extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props)
-
-        this.state = {
-        }
-    }
-
-
-
-
+export default class ResultList extends React.Component<Props> {
     render() {
         return (<ul className="result-list">
             {this.resultList}
@@ -29,19 +17,33 @@ export default class ResultList extends React.Component<Props, State> {
 
     private get resultList(): React.ReactFragment {
 
-        const list = this.props.resultList.map((item: { description: string, title: string }, index: number) => {
-            return <li key={index} tabIndex={index + 1} className={this.activeItem(index)}>{item.title}, {item.description}</li>
+        const list = this.props.resultList.map((item: ResultItem, index: number) => {
+            return <li key={index} tabIndex={index + 1} className={this.activeItem(index)}>
+                {this.getImage(item)}
+                <div className="content">
+                    <div className="title">{item.title}</div>
+                    <div className="description">{item.description}</div>
+                </div>
+            </li>
         })
 
-        return (<>
+        return <>
             {list}
-        </>)
+        </>
+    }
+
+    private getImage(item: ResultItem) {
+        console.debug(`get image`, item)
+        if (item.image) {
+            return <img src={item.image} />
+        }
+        return null
     }
 
     private activeItem(index: number): string {
         if (this.props.activeIndex === index) {
-            return "active"
+            return "active result-item"
         }
-        return ""
+        return "result-item"
     }
 }

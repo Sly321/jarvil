@@ -1,16 +1,22 @@
 const opn = require("opn")
+const path = require("path")
 
 class GoogleSearchPlugin {
     static get trigger() {
         return "g"
     }
 
+    static get exact() {
+        return true
+    }
+
     static getResultItems(...args) {
         return [{
-            title: "GoogleSearchPlugin",
+            title: "Google",
             description: args.join(" "),
             name: "google-search",
-            actionId: ""
+            actionId: "",
+            image: path.resolve(__dirname, "google-logo.svg")
         }]
     }
 

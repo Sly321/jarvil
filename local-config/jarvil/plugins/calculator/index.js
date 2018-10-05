@@ -1,4 +1,5 @@
 const math = require('mathjs');
+const path = require("path");
 class Calculator {
     static get trigger() {
         return "";
@@ -10,9 +11,10 @@ class Calculator {
                 return [];
             }
             return [{
-                    title: "Calc",
-                    description: result,
-                    name: "calculator"
+                    title: result,
+                    description: "calculator",
+                    name: "calculator",
+                    image: path.resolve(__dirname, "logo.svg")
                 }];
         }
         catch (_a) {

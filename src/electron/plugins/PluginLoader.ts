@@ -105,7 +105,7 @@ export default class PluginLoader {
             }
 
             const { name, version } = packageJson
-            const plugin = new JarvilPlugin(name, version, importedClass.trigger, importedClass.getResultItems, importedClass.action)
+            const plugin = new JarvilPlugin(name, version, importedClass.trigger, importedClass.getResultItems, importedClass.action, importedClass.exact)
             result.push(plugin)
             Logger.info(`Successfully imported plugin: ${plugin.name}:${plugin.version}`)
         })

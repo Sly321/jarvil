@@ -3,6 +3,7 @@ import Events from "../Events"
 import { ResultItem } from "../Processor"
 import Logger from "../utils/Logger"
 import JarvilPluginInterface from "./JarvilPluginInterface"
+import { resolve } from "path"
 
 export enum JarvilSystemPluginAction {
     Settings = "jarvil/settings",
@@ -70,10 +71,22 @@ export default class JarvilSystemPlugin implements JarvilPluginInterface {
     }
 
     private static get settingsResultItem(): ResultItem {
-        return { title: "Jarvil", description: "Open Settings", name: "jarvil-system-plugin", actionId: JarvilSystemPluginAction.Settings }
+        return {
+            title: "Jarvil",
+            description: "Open Settings",
+            name: "jarvil-system-plugin",
+            actionId: JarvilSystemPluginAction.Settings,
+            image: resolve(__dirname, "jarvil-logo.svg")
+        }
     }
 
     private static get closeResultItem(): ResultItem {
-        return { title: "Jarvil", description: "Close Jarvil", name: "jarvil-system-plugin", actionId: JarvilSystemPluginAction.Close }
+        return {
+            title: "Jarvil",
+            description: "Close Jarvil",
+            name: "jarvil-system-plugin",
+            actionId: JarvilSystemPluginAction.Close,
+            image: resolve(__dirname, "jarvil-close.svg")
+        }
     }
 }
