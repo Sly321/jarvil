@@ -4,6 +4,8 @@ import Logger from "./utils/Logger"
 export interface ResultItem {
     title: string
     description: string
+    name: string
+    image?: string
 }
 
 export default class Processor {
