@@ -1,4 +1,4 @@
-import { ipcMain, BrowserWindow } from "electron"
+import { ipcMain, BrowserWindow, globalShortcut } from "electron"
 import createSettingsWindow from "./SettingsWindow"
 import Events from "./Events"
 import { ThemeLoader } from "./themes/ThemeLoader"
@@ -17,6 +17,7 @@ export default class EventHandler {
         this.processor = new Processor(plugins)
         this.preferences = new Preferences()
         this.registerListeners()
+        this.registerShortcuts()
     }
 
     /**
@@ -88,5 +89,18 @@ export default class EventHandler {
             // TODO, send event from 1 window to another. this works when triggered in main, but not in settings
             event.sender.send(Events.ReloadLauncherTheme)
         })
+    }
+
+    private registerShortcuts() {
+
+        globalShortcut.register(this.preferences.shortcutFocus, () => {
+            this.mainWindow.show()
+            this.mainWindow.focus()
+        })
+
+        globalShortcut.register(this.preferences.shortcutHide, () => {
+            this.mainWindow.hide()
+        })
+
     }
 }

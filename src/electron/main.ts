@@ -201,6 +201,8 @@ function createWindow() {
     mainWindow.setMenu(menu)
     //   }
 
+
+
     // Open the DevTools.
     // mainWindow.webContents.openDevTools()
 
@@ -210,7 +212,6 @@ function createWindow() {
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
         mainWindow = null
-
     })
 
 }
@@ -224,17 +225,6 @@ app.on('ready', () => {
         new EventHandler(mainWindow)
     }
 
-    const shortcut = 'Alt+Space';
-    const ret = globalShortcut.register(shortcut, () => {
-        mainWindow.focus()
-    })
-
-    if (!ret) {
-        Logger.log('registration failed')
-    }
-
-    // Check whether a shortcut is registered.
-    Logger.log(`shortcut registered? ${globalShortcut.isRegistered('Alt+Space')}`)
 })
 
 // Quit when all windows are closed.

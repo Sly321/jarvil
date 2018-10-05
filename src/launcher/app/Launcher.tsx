@@ -14,17 +14,13 @@ export interface State {
     inputValue: string
 }
 
-
 enum KeyCode {
     Return = 13,
     Up = 38,
     Down = 40
 }
 
-
 export default class Launcher extends Component<Props, State> {
-
-
     private static allowedKeyCodes: Array<KeyCode> = [KeyCode.Return, KeyCode.Up, KeyCode.Down]
 
     private inputRef: RefObject<HTMLInputElement> = React.createRef<HTMLInputElement>()
