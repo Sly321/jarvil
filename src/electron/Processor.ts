@@ -25,7 +25,9 @@ export default class Processor {
             return triggeredPlugin.getResultItems(this.getInputWithoutTrigger(input, triggeredPlugin))
         }
 
-        this.plugins.forEach(plugin => {
+        const onlyNonExactPlugins = this.plugins.filter(plugin => !plugin.exact)
+
+        onlyNonExactPlugins.forEach(plugin => {
             try {
                 const resultitems = plugin.getResultItems(this.getInputWithoutTrigger(input, plugin))
                 result.push(...resultitems)

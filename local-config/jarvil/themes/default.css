@@ -23,7 +23,7 @@
 .launcher ul.result-list li {
     color: white;
     font-size: 30px;
-    padding: 15px;
+    /* padding: 15px; */
 }
 
 .launcher ul.result-list li.active {
