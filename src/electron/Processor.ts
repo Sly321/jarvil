@@ -39,7 +39,7 @@ export default class Processor {
     }
 
     public executeAction(pluginName: string, input: string): Promise<void> {
-        Logger.info(`Processor - executeAction - ${pluginName} - input`)
+        Logger.info(`Processor - executeAction - ${pluginName} - ${input}`)
 
         const plugin = this.plugins.find(plugin => plugin.name === pluginName)
 

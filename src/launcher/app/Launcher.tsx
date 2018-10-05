@@ -1,7 +1,8 @@
-import * as React from "react"
+import React, { Component } from "react"
 import Events from "../../electron/Events"
 import ThemeHandler from "./ThemeHandler"
 import ServiceFactory from "../../shared-frontend/ServiceFactory"
+import ResultList from "./ResultList"
 
 export interface Props {
 }
@@ -11,7 +12,18 @@ export interface State {
     resultList: Array<{ description: string, title: string }>
 }
 
-export default class Launcher extends React.Component<Props, State> {
+
+enum KeyCode {
+    Return = 13,
+    Up = 38,
+    Down = 40
+}
+
+
+export default class Launcher extends Component<Props, State> {
+
+    private static allowedKeyCodes: Array<KeyCode> = [KeyCode.Return, KeyCode.Up, KeyCode.Down]
+
     constructor(props: Props) {
         super(props)
 
@@ -45,20 +57,46 @@ export default class Launcher extends React.Component<Props, State> {
 
 
     private handleKeyDown(event: React.KeyboardEvent) {
-        let { activeIndex, resultList } = this.state
-
-
-        console.log(event.keyCode)
-
-        if (event.keyCode !== 38 && event.keyCode !== 40) {
+        console.debug(`[handleKeyDown] keyCode=${event.keyCode}`)
+        // paranoia-check
+        if (!Launcher.allowedKeyCodes.includes(event.keyCode)) {
             return
         }
+        switch (event.keyCode) {
+            case KeyCode.Up:
+                this.moveUp()
+                break
+            case KeyCode.Down:
+                this.moveDown()
+                break
+            case KeyCode.Return:
+                this.callAction()
+                break
+            default: break
+        }
+    }
 
-        if (event.keyCode === 38 && activeIndex > 0) {
+    private callAction(): void {
+        const { activeIndex, resultList } = this.state
+        const result = resultList[activeIndex]
+        console.log(`${result.title} - ${result.description}`)
+        ServiceFactory.Eventbus.sendSync(Events.ActionExecuted, result.title, result.description)
+    }
+
+    private moveUp(): void {
+        let { activeIndex } = this.state
+        if (activeIndex > 0) {
             this.setState({ activeIndex: --activeIndex })
+            console.debug("[handleKeyDown] move up")
 
-        } else if (event.keyCode === 40 && activeIndex < resultList.length - 1) {
+        }
+    }
+
+    private moveDown(): void {
+        let { activeIndex, resultList } = this.state
+        if (activeIndex < resultList.length - 1) {
             this.setState({ activeIndex: ++activeIndex })
+            console.debug("[handleKeyDown] move down")
         }
     }
 
@@ -67,27 +105,8 @@ export default class Launcher extends React.Component<Props, State> {
             <div className="launcher">
                 <ThemeHandler />
                 <input className="search-input" tabIndex={0} onChange={this.handleChange.bind(this)} onKeyDown={this.handleKeyDown.bind(this)} />
-
-                {this.showResults}
+                <ResultList resultList={this.state.resultList} activeIndex={this.state.activeIndex} />
             </div>
         )
-    }
-
-
-    private get showResults(): any {
-
-        let list = this.state.resultList.map((item: { description: string, title: string }, index: number) => {
-            return <li key={index} tabIndex={index + 1} className={this.activeItem(index)}>{item.title}, {item.description}</li>
-        })
-        return (<ul className="result-list">
-            {list}
-        </ul>)
-    }
-
-    private activeItem(index: number): string {
-        if (this.state.activeIndex === index) {
-            return "active"
-        }
-        return ""
     }
 }
