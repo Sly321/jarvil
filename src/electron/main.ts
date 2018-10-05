@@ -1,9 +1,10 @@
-import { app, BrowserWindow, Menu } from "electron"
+import { app, BrowserWindow, Menu, globalShortcut } from "electron"
 import createSettingsWindow from "./SettingsWindow"
 const paths = require('../../config/paths');
 import url from "url"
 
 import EventHandler from "./Eventing"
+import Logger from "./utils/Logger"
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -179,7 +180,7 @@ function createWindow() {
         resizable: false,
         minimizable: false,
         maximizable: false,
-        alwaysOnTop: true,
+        alwaysOnTop: false,
         closable: false,
         useContentSize: true,
         frame: false,
@@ -209,6 +210,7 @@ function createWindow() {
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
         mainWindow = null
+
     })
 
 }
@@ -221,6 +223,18 @@ app.on('ready', () => {
     if (mainWindow !== null) {
         new EventHandler(mainWindow)
     }
+
+    const shortcut = 'Alt+Space';
+    const ret = globalShortcut.register(shortcut, () => {
+        mainWindow.focus()
+    })
+
+    if (!ret) {
+        Logger.log('registration failed')
+    }
+
+    // Check whether a shortcut is registered.
+    Logger.log(`shortcut registered? ${globalShortcut.isRegistered('Alt+Space')}`)
 })
 
 // Quit when all windows are closed.
@@ -230,6 +244,7 @@ app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') {
         app.quit()
     }
+
 })
 
 app.on('activate', function () {
