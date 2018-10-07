@@ -2,6 +2,8 @@
 
 **j**ust **a** **r**eal **v**iable **i**ntuitive **l**auncher
 
+[![CircleCI](https://circleci.com/gh/Sly321/jarvil.svg?style=svg)](https://circleci.com/gh/Sly321/jarvil)
+
 ## installation
 
 First of all, you need electron installed globally:
