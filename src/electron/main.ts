@@ -1,9 +1,10 @@
-import { app, BrowserWindow, Menu } from "electron"
+import { app, BrowserWindow, Menu, globalShortcut } from "electron"
 import createSettingsWindow from "./SettingsWindow"
 const paths = require('../../config/paths');
 import url from "url"
 
 import EventHandler from "./Eventing"
+import Logger from "./utils/Logger"
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -179,7 +180,7 @@ function createWindow() {
         resizable: false,
         minimizable: false,
         maximizable: false,
-        alwaysOnTop: true,
+        alwaysOnTop: false,
         closable: false,
         useContentSize: true,
         frame: false,
@@ -199,6 +200,8 @@ function createWindow() {
     mainWindow.webContents.openDevTools({ mode: 'detach' });
     mainWindow.setMenu(menu)
     //   }
+
+
 
     // Open the DevTools.
     // mainWindow.webContents.openDevTools()
@@ -221,6 +224,7 @@ app.on('ready', () => {
     if (mainWindow !== null) {
         new EventHandler(mainWindow)
     }
+
 })
 
 // Quit when all windows are closed.
@@ -230,6 +234,7 @@ app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') {
         app.quit()
     }
+
 })
 
 app.on('activate', function () {
