@@ -76,7 +76,8 @@ export default class JarvilSystemPlugin implements JarvilPluginInterface {
             description: "Open Settings",
             name: "jarvil-system-plugin",
             actionId: JarvilSystemPluginAction.Settings,
-            image: resolve(__dirname, "jarvil-logo.svg")
+            image: resolve(__dirname, "jarvil-logo.svg"),
+            preview: "<div style='background: black;'>Hey was geht</div>",
         }
     }
 
