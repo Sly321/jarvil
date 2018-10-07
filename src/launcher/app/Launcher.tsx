@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { Component, Ref, RefObject } from "react"
 import Events from "../../electron/Events"
 import { ResultItem, ActionObject } from "../../electron/Processor"
 import ThemeHandler from "./ThemeHandler"
@@ -21,13 +21,15 @@ enum KeyCode {
 }
 
 export default class Launcher extends Component<Props, State> {
-
     private static allowedKeyCodes: Array<KeyCode> = [KeyCode.Return, KeyCode.Up, KeyCode.Down]
+
+    private inputRef: RefObject<HTMLInputElement> = React.createRef<HTMLInputElement>()
 
     constructor(props: Props) {
         super(props)
 
         this.state = this.initState()
+
     }
 
     private initState(): State {
@@ -36,6 +38,10 @@ export default class Launcher extends Component<Props, State> {
             inputValue: "",
             resultList: []
         }
+    }
+
+    componentDidMount() {
+        this.inputRef.current.focus()
     }
 
     private handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -110,7 +116,13 @@ export default class Launcher extends Component<Props, State> {
         return (
             <div className="launcher">
                 <ThemeHandler />
-                <input className="search-input" tabIndex={0} onChange={this.handleChange.bind(this)} onKeyDown={this.handleKeyDown.bind(this)} value={this.state.inputValue} />
+                <input
+                    className="search-input"
+                    tabIndex={0}
+                    onChange={this.handleChange.bind(this)}
+                    onKeyDown={this.handleKeyDown.bind(this)}
+                    ref={this.inputRef}
+                    value={this.state.inputValue} />
                 <div className="result-container">
                     <ResultList resultList={this.state.resultList} activeIndex={this.state.activeIndex} />
                 </div>
