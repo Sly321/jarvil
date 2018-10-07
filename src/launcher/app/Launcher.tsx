@@ -14,13 +14,11 @@ export interface State {
     inputValue: string
 }
 
-
 enum KeyCode {
     Return = 13,
     Up = 38,
     Down = 40
 }
-
 
 export default class Launcher extends Component<Props, State> {
 
@@ -113,7 +111,9 @@ export default class Launcher extends Component<Props, State> {
             <div className="launcher">
                 <ThemeHandler />
                 <input className="search-input" tabIndex={0} onChange={this.handleChange.bind(this)} onKeyDown={this.handleKeyDown.bind(this)} value={this.state.inputValue} />
-                <ResultList resultList={this.state.resultList} activeIndex={this.state.activeIndex} />
+                <div className="result-container">
+                    <ResultList resultList={this.state.resultList} activeIndex={this.state.activeIndex} />
+                </div>
             </div>
         )
     }
