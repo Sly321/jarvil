@@ -8,7 +8,8 @@ import { resolve } from "path"
 export enum JarvilSystemPluginAction {
     Settings = "jarvil/settings",
     Close = "jarvil/close",
-    Exit = "jarvil/exit"
+    Exit = "jarvil/exit",
+    ReloadPlugins = "jarvil/reloadTheme"
 }
 
 export default class JarvilSystemPlugin implements JarvilPluginInterface {
@@ -27,6 +28,9 @@ export default class JarvilSystemPlugin implements JarvilPluginInterface {
         switch (actionId) {
             case JarvilSystemPluginAction.Settings:
                 ipcMain.emit(Events.OpenSettings)
+                break
+            case JarvilSystemPluginAction.ReloadPlugins:
+                ipcMain.emit(Events.ReloadPlugins)
                 break
             case JarvilSystemPluginAction.Close:
             case JarvilSystemPluginAction.Exit:
@@ -55,13 +59,16 @@ export default class JarvilSystemPlugin implements JarvilPluginInterface {
             switch (action) {
                 case JarvilSystemPluginAction.Settings:
                     return [JarvilSystemPlugin.settingsResultItem]
+                case JarvilSystemPluginAction.ReloadPlugins:
+                    return [JarvilSystemPlugin.reloadPluginsResultItem]
                 case JarvilSystemPluginAction.Close:
                 case JarvilSystemPluginAction.Exit:
                     return [JarvilSystemPlugin.closeResultItem]
                 default:
                     return [
                         JarvilSystemPlugin.settingsResultItem,
-                        JarvilSystemPlugin.closeResultItem
+                        JarvilSystemPlugin.closeResultItem,
+                        JarvilSystemPlugin.reloadPluginsResultItem
                     ]
             }
 
@@ -70,11 +77,19 @@ export default class JarvilSystemPlugin implements JarvilPluginInterface {
         }
     }
 
+    private static get reloadPluginsResultItem(): ResultItem {
+        return {
+            ...this.createResultItem(),
+            description: "Reload Plugins",
+            actionId: JarvilSystemPluginAction.ReloadPlugins,
+            image: resolve(__dirname, "jarvil-replay.svg")
+        }
+    }
+
     private static get settingsResultItem(): ResultItem {
         return {
-            title: "Jarvil",
+            ...this.createResultItem(),
             description: "Open Settings",
-            name: "jarvil-system-plugin",
             actionId: JarvilSystemPluginAction.Settings,
             image: resolve(__dirname, "jarvil-logo.svg"),
             preview: "<div style='background: black;'>Hey was geht</div>",
@@ -83,11 +98,17 @@ export default class JarvilSystemPlugin implements JarvilPluginInterface {
 
     private static get closeResultItem(): ResultItem {
         return {
-            title: "Jarvil",
+            ...this.createResultItem(),
             description: "Close Jarvil",
-            name: "jarvil-system-plugin",
             actionId: JarvilSystemPluginAction.Close,
             image: resolve(__dirname, "jarvil-close.svg")
+        }
+    }
+
+    private static createResultItem(): Pick<ResultItem, "title" | "name"> {
+        return {
+            title: "Jarvil",
+            name: "jarvil-system-plugin"
         }
     }
 }
