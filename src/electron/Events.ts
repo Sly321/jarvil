@@ -5,6 +5,7 @@ const Events = {
     ActionExecuted: "event.action.executed",
     // Plugins
     GetPlugins: "get.plugins",
+    ReloadPlugins: "reload.plugins",
     // Themes
     GetThemes: "get.themes",
     GetSelectedTheme: "get.selected.theme",
