@@ -45,7 +45,9 @@
     "webpack-merge": "^4.1.4"
   },
   "build": {
-    "appId": "jarvil",
+    "appId": "github",
+    "productName": "jarvil",
+    "artifactName": "jarvil-${version}-${arch}.${ext}",
     "mac": {
       "category": "public.app-category.productivity"
     },
@@ -53,8 +55,15 @@
       "category": "Development"
     },
     "win": {
-      "publish": ["github"]
+      "target": [{
+        "target": "portable",
+        "arch": [
+          "x64",
+          "ia32"
+        ]
+      }]
     },
+    "publish": ["github"],
     "files": [
       "src/electron/**/*.js",
       "dist",
