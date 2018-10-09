@@ -16,18 +16,6 @@
     "react-helmet": "^5.2.0",
     "typescript": "^3.0.1"
   },
-  "scripts": {
-    "clean:electron": "shx rm src/electron/**/*.js",
-    "clean:target": "shx rm -rf dist",
-    "clean:modules": "shx rm -rf node_modules",
-    "clean:all": "yarn clean:target && yarn clean:electron && yarn clean:modules",
-    "run-electron": "electron .",
-    "build": "tsc && yarn build:app && cross-env NODE_ENV=production electron-builder && yarn clean:electron",
-    "build:app": "cross-env NODE_ENV=production webpack --config ./config/webpack.prod.config.js",
-    "build:js": "tsc && cross-env NODE_ENV=development webpack --config ./config/webpack.dev.config.js",
-    "start": "tsc && cross-env NODE_ENV=development webpack-dev-server --config ./config/webpack.dev.config.js",
-    "start:debug": "tsc && cross-env NODE_ENV=development webpack-dev-server -d --config ./config/webpack.dev.config.js"
-  },
   "devDependencies": {
     "cross-env": "^5.2.0",
     "css-loader": "^1.0.0",
@@ -43,6 +31,18 @@
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.5",
     "webpack-merge": "^4.1.4"
+  },
+  "scripts": {
+    "clean:electron": "shx rm src/electron/**/*.js",
+    "clean:target": "shx rm -rf dist",
+    "clean:modules": "shx rm -rf node_modules",
+    "clean:all": "yarn clean:target && yarn clean:electron && yarn clean:modules",
+    "run-electron": "electron .",
+    "build": "tsc && yarn build:app && cross-env NODE_ENV=production electron-builder -w && yarn clean:electron",
+    "build:app": "cross-env NODE_ENV=production webpack --config ./config/webpack.prod.config.js",
+    "build:js": "tsc && cross-env NODE_ENV=development webpack --config ./config/webpack.dev.config.js",
+    "start": "tsc && cross-env NODE_ENV=development webpack-dev-server --config ./config/webpack.dev.config.js",
+    "start:debug": "tsc && cross-env NODE_ENV=development webpack-dev-server -d --config ./config/webpack.dev.config.js"
   },
   "build": {
     "appId": "github",
