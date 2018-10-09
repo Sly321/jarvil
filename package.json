@@ -57,6 +57,7 @@
       "category": "Development"
     },
     "win": {
+      "icon": "config/icon.png",
       "target": [{
         "target": "portable",
         "arch": [
@@ -76,7 +77,8 @@
       "src/electron/**/*.js",
       "dist",
       "node_modules",
-      "config/paths.js"
+      "config/paths.js",
+      "config/icon.png"
     ],
     "copyright": "Copyright © 2018 ${author}"
   }
