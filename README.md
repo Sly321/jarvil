@@ -8,6 +8,8 @@
 
 [ ] Processor, create an algorithm to load only the plugins that match the input
 
+[ ] Initial copy of default.css to config directory of the user
+
 **j**ust **a** **r**eal **v**iable **i**ntuitive **l**auncher
 
 [![CircleCI](https://circleci.com/gh/Sly321/jarvil.svg?style=svg)](https://circleci.com/gh/Sly321/jarvil)

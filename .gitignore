@@ -2,7 +2,9 @@ node_modules
 yarn.lock
 package-lock.json
 dist
+build
 **/*.js.map
 src/electron/**/*.js
 npm-debug.log
 npm-debug.log*
+.env

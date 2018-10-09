@@ -10,7 +10,6 @@
     "@types/react": "^16.4.14",
     "@types/react-dom": "^16.0.7",
     "@types/react-helmet": "^5.0.7",
-    "file-loader": "^2.0.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-helmet": "^5.2.0",
@@ -21,6 +20,8 @@
     "css-loader": "^1.0.0",
     "electron": "3.0.0-beta.5",
     "electron-builder": "^20.28.1",
+    "env-cmd": "^8.0.2",
+    "file-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
     "node-sass": "4.9.3",
     "sass-loader": "7.1.0",
@@ -38,14 +39,15 @@
     "clean:modules": "shx rm -rf node_modules",
     "clean:all": "yarn clean:target && yarn clean:electron && yarn clean:modules",
     "run-electron": "electron .",
-    "build": "tsc && yarn build:app && cross-env NODE_ENV=production electron-builder -w -p \"onTagOrDraft\" && yarn clean:electron",
+    "build": "tsc && yarn build:app && cross-env NODE_ENV=production electron-builder && yarn clean:electron",
+    "build:win:publish": "tsc && yarn build:app && env-cmd ./.env electron-builder -w -p \"always\" && yarn clean:electron",
     "build:app": "cross-env NODE_ENV=production webpack --config ./config/webpack.prod.config.js",
     "build:js": "tsc && cross-env NODE_ENV=development webpack --config ./config/webpack.dev.config.js",
     "start": "tsc && cross-env NODE_ENV=development webpack-dev-server --config ./config/webpack.dev.config.js",
     "start:debug": "tsc && cross-env NODE_ENV=development webpack-dev-server -d --config ./config/webpack.dev.config.js"
   },
   "build": {
-    "appId": "github",
+    "appId": "com.github.sly321",
     "productName": "jarvil",
     "artifactName": "jarvil-${version}-${arch}.${ext}",
     "mac": {
@@ -56,19 +58,26 @@
     },
     "win": {
       "target": [{
-        "target": "zip",
+        "target": "portable",
         "arch": [
           "x64",
           "ia32"
         ]
       }]
     },
-    "publish": ["github"],
+    "publish": [
+      "github"
+    ],
+    "directories": {
+      "output": "build"
+    },
     "files": [
+      "src/electron/**/*.svg",
       "src/electron/**/*.js",
       "dist",
       "node_modules",
       "config/paths.js"
-    ]
+    ],
+    "copyright": "Copyright © 2018 ${author}"
   }
 }
