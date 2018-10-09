@@ -1,174 +1,11 @@
-import { app, BrowserWindow, Menu, globalShortcut } from "electron"
+import { app, BrowserWindow, Menu } from "electron"
 import createSettingsWindow from "./SettingsWindow"
 const paths = require('../../config/paths');
 import url from "url"
 
 import EventHandler from "./Eventing"
-import Logger from "./utils/Logger"
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: Electron.BrowserWindow
-
-const template: Array<Electron.MenuItemConstructorOptions> = [{
-    label: 'Edit',
-    submenu: [{
-        role: 'undo'
-    },
-    {
-        role: 'redo'
-    },
-    {
-        type: 'separator'
-    },
-    {
-        role: 'cut'
-    },
-    {
-        role: 'copy'
-    },
-    {
-        role: 'paste'
-    },
-    {
-        role: 'pasteandmatchstyle'
-    },
-    {
-        role: 'delete'
-    },
-    {
-        role: 'selectall'
-    }
-    ]
-},
-{
-    label: 'View',
-    submenu: [{
-        role: 'reload'
-    },
-    {
-        role: 'forcereload'
-    },
-    {
-        role: 'toggledevtools'
-    },
-    {
-        type: 'separator'
-    },
-    {
-        role: 'resetzoom'
-    },
-    {
-        role: 'zoomin'
-    },
-    {
-        role: 'zoomout'
-    },
-    {
-        type: 'separator'
-    },
-    {
-        role: 'togglefullscreen'
-    }
-    ]
-},
-{
-    role: 'window',
-    submenu: [{
-        role: 'minimize'
-    },
-    {
-        role: 'close'
-    }, {
-        label: 'Learn More',
-        click() {
-            createSettingsWindow(mainWindow)
-        }
-    }
-    ]
-},
-{
-    role: 'help',
-    submenu: [{
-        label: 'Learn More',
-        click() {
-            require('electron').shell.openExternal('https://electronjs.org')
-        }
-    }]
-}
-]
-
-if (process.platform === 'darwin') {
-    template.unshift({
-        label: app.getName(),
-        submenu: [{
-            role: 'about'
-        },
-        {
-            type: 'separator'
-        },
-        {
-            role: 'services',
-            submenu: []
-        },
-        {
-            type: 'separator'
-        },
-        {
-            role: 'hide'
-        },
-        {
-            role: 'hideothers'
-        },
-        {
-            role: 'unhide'
-        },
-        {
-            type: 'separator'
-        },
-        {
-            role: 'quit'
-        }
-        ]
-    })
-
-    // Edit menu
-    const sub = template[1].submenu
-    if (Array.isArray(sub)) {
-        sub.push({
-            type: 'separator'
-        }, {
-                label: 'Speech',
-                submenu: [{
-                    role: 'startspeaking'
-                },
-                {
-                    role: 'stopspeaking'
-                }
-                ]
-            })
-    }
-
-    // Window menu
-    template[3].submenu = [{
-        role: 'close'
-    },
-    {
-        role: 'minimize'
-    },
-    {
-        role: 'zoom'
-    },
-    {
-        type: 'separator'
-    },
-    {
-        role: 'front'
-    }
-    ]
-}
-
-const menu = Menu.buildFromTemplate(template)
 
 function createWindow() {
     // Create the browser window.
@@ -196,15 +33,9 @@ function createWindow() {
         slashes: true,
     }))
 
-    // if (process.env.NODE_ENV === 'development') {
-    mainWindow.webContents.openDevTools({ mode: 'detach' });
-    mainWindow.setMenu(menu)
-    //   }
-
-
-
-    // Open the DevTools.
-    // mainWindow.webContents.openDevTools()
+    if (process.env.NODE_ENV === 'development') {
+        mainWindow.webContents.openDevTools({ mode: 'detach' });
+    }
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function () {
@@ -224,7 +55,6 @@ app.on('ready', () => {
     if (mainWindow !== null) {
         new EventHandler(mainWindow)
     }
-
 })
 
 // Quit when all windows are closed.
@@ -234,7 +64,6 @@ app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') {
         app.quit()
     }
-
 })
 
 app.on('activate', function () {
@@ -247,6 +76,3 @@ app.on('activate', function () {
 })
 
 module.exports = createSettingsWindow
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.

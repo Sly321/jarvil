@@ -1,9 +1,8 @@
-import { existsSync, readdirSync, lstatSync, readFileSync } from "fs"
-import Theme from "./Theme"
-import { resolve, dirname } from "path"
-import { homedir } from "os"
+import { existsSync, readdirSync, readFileSync, writeFileSync } from "fs"
+import { resolve } from "path"
 import FileSystem from "../utils/FileSystem"
 import Logger from "../utils/Logger"
+import Theme from "./Theme"
 
 export class ThemeLoader {
     public static getThemes(): Array<Theme> {
@@ -32,14 +31,51 @@ export class ThemeLoader {
      * @memberof ThemeLoader
      */
     private static get themesLocation(): string {
+        Logger.info(`ThemeLoader.get::themesLocation`)
         const homeDirectory = FileSystem.getHomeDirectory()
         const resultDirectory = resolve(homeDirectory, "jarvil", "themes")
 
         if (!existsSync(resultDirectory)) {
             Logger.info(`ThemeLoader.get::themesLocation - no themes directory, creating it at: ${resultDirectory}`)
             FileSystem.MakeDirRecursively(resultDirectory)
+            ThemeLoader.createInitialCss()
         }
 
+        Logger.info(`ThemeLoader.get::themesLocation::return::${resultDirectory}`)
         return resultDirectory
+    }
+
+    private static createInitialCss(): void {
+        writeFileSync(resolve(ThemeLoader.themesLocation, "default.css"), `.launcher {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+        }
+
+        /* Input Component */
+        .launcher input.search-input {
+            font-size: 33px;
+            background: transparent;
+            outline: none;
+            border: none;
+            padding: 30px 18px;
+            color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Result List Warraper */
+        .launcher ul.result-list {
+            background: transparent;
+        }
+
+        /* Result List Items */
+        .launcher ul.result-list li {
+            color: white;
+            font-size: 30px;
+            /* padding: 15px; */
+        }
+
+        .launcher ul.result-list li.active {
+            background-color: #ffffff5d;
+        }`, "utf8")
     }
 }

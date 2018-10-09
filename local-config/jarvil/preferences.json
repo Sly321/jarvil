@@ -1,1 +1,5 @@
-{"selectedTheme":"nature","shortcutFocus":"Alt+Space","shortcutHide":"Esc"}
+{
+    "selectedTheme": "default",
+    "shortcutFocus": "Alt+Space",
+    "shortcutHide": "Esc"
+}
