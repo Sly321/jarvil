@@ -1,6 +1,16 @@
 # jarvil
 
+## TODO
+
+[ ] Boilerplate Template for Plugins with Jest Tests to prove it's functionality
+
+[ ] Plugin Manager, at the moment the plugins have to be npm install'ed manually to work
+
+[ ] Processor, create an algorithm to load only the plugins that match the input
+
 **j**ust **a** **r**eal **v**iable **i**ntuitive **l**auncher
+
+[![CircleCI](https://circleci.com/gh/Sly321/jarvil.svg?style=svg)](https://circleci.com/gh/Sly321/jarvil)
 
 ## installation
 

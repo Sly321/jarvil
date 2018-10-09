@@ -123,7 +123,9 @@ export default class Launcher extends Component<Props, State> {
                     onKeyDown={this.handleKeyDown.bind(this)}
                     ref={this.inputRef}
                     value={this.state.inputValue} />
-                <ResultList resultList={this.state.resultList} activeIndex={this.state.activeIndex} />
+                <div className="result-container">
+                    <ResultList resultList={this.state.resultList} activeIndex={this.state.activeIndex} />
+                </div>
             </div>
         )
     }

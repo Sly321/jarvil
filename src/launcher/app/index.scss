@@ -1,5 +1,3 @@
-$color-body: rgba(7, 70, 165, 0.0);
-
 * {
     box-sizing: border-box;
 }
@@ -17,7 +15,6 @@ html, body {
 
 body {
     width: 100%;
-    background-color: $color-body;
 }
 
 #root {
@@ -32,64 +29,63 @@ body {
     display: flex;
     padding: 0 5px 5px 5px;
 
-    .search-input,.result-list  {
-        order: 0;
-        flex-grow: 1;
-        flex-shrink: 1;
-        flex-basis: auto;
-        align-self: stretch;
-        margin: 0;
-        padding: 0;
-    }
-
     .search-input {
         width: 100%;
         height: 34px;
         font-size: 14pt;
     }
 
-    .result-list {
-        list-style-type: none;
-        // padding: 4px;
-        background-color: rgba(255, 182, 47, 0.288);
-
-        .result-item {
-            display: flex;
-            max-height: 64px;
-            padding: 10px;
-
-            img {
-                flex-grow: 0;
-                max-width: 44px;
-            }
-
-            .content{
-                flex-grow: 1;
-                margin-left: 10px;
-
-                .title {
-                    font-size: 24px;
-                }
-
-                .description {
-                    font-size: 14px;
-                }
-            }
-
-            // &.active {
-            //     background-color: #ffffff5d;
-            // }
-        }
-
+    .search-input,.result-list  {
+        margin: 0;
+        padding: 0;
     }
 
+    .result-container {
+        align-self: stretch;
+        display: flex;
 
+        .result-list {
+            margin-top: 4px;
+            flex-grow: 1;
+            list-style-type: none;
+
+            .result-item {
+                display: flex;
+                max-height: 64px;
+                padding: 10px;
+
+                img {
+                    flex-grow: 0;
+                    max-width: 44px;
+                }
+
+                .content{
+                    flex-grow: 1;
+                    margin-left: 10px;
+
+                    .title {
+                        font-size: 24px;
+                    }
+
+                    .description {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+
+        .preview {
+            margin-top: 4px;
+            flex-grow: 1;
+            display: none;
+
+            &.active {
+                display: block;
+            }
+        }
+    }
 }
-
 
 input {
     -webkit-app-region: no-drag;
 }
-
-
-

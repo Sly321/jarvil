@@ -61,11 +61,16 @@ export default class EventHandler {
         })
 
         /** Plugins */
-
         ipcMain.on(Events.GetPlugins, (event: Electron.Event) => {
             Logger.info(`Event: Events.GetPlugins`)
-            const themes = this.processor.getPlugins()
-            event.returnValue = themes
+            const plugins = this.processor.getPlugins()
+            event.returnValue = plugins
+        })
+
+        ipcMain.on(Events.ReloadPlugins, (event: Electron.Event) => {
+            Logger.info(`Event: Events.ReloadPlugins`)
+            const plugins = PluginLoader.getPlugins()
+            this.processor = new Processor(plugins)
         })
 
         /** Themes */

@@ -7,6 +7,7 @@ export interface ResultItem {
     description: string
     name: string
     image?: string
+    preview?: string
 }
 
 export interface ActionObject { name: string, actionId: string, input: string }
