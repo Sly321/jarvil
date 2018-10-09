@@ -46,6 +46,9 @@
     "mac": {
       "category": "jarvil"
     },
+    "win": {
+      "publish": ["github"]
+    },
     "files": [
       "src/electron/**/*.js",
       "dist",
