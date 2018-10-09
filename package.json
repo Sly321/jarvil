@@ -38,7 +38,7 @@
     "clean:modules": "shx rm -rf node_modules",
     "clean:all": "yarn clean:target && yarn clean:electron && yarn clean:modules",
     "run-electron": "electron .",
-    "build": "tsc && yarn build:app && cross-env NODE_ENV=production electron-builder -w && yarn clean:electron",
+    "build": "tsc && yarn build:app && cross-env NODE_ENV=production electron-builder -w -p \"onTagOrDraft\" && yarn clean:electron",
     "build:app": "cross-env NODE_ENV=production webpack --config ./config/webpack.prod.config.js",
     "build:js": "tsc && cross-env NODE_ENV=development webpack --config ./config/webpack.dev.config.js",
     "start": "tsc && cross-env NODE_ENV=development webpack-dev-server --config ./config/webpack.dev.config.js",
@@ -56,7 +56,7 @@
     },
     "win": {
       "target": [{
-        "target": "portable",
+        "target": "zip",
         "arch": [
           "x64",
           "ia32"
