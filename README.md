@@ -2,13 +2,11 @@
 
 ## TODO
 
-[ ] Boilerplate Template for Plugins with Jest Tests to prove it's functionality
-
-[ ] Plugin Manager, at the moment the plugins have to be npm install'ed manually to work
-
-[ ] Processor, create an algorithm to load only the plugins that match the input
-
-[ ] Initial copy of default.css to config directory of the user
+- [ ] Boilerplate Template for Plugins with Jest Tests to prove it's functionality
+- [ ] Plugin Manager, at the moment the plugins have to be npm install'ed manually to work
+- [ ] Processor, create an algorithm to load only the plugins that match the input
+- [ ] Initial copy of default.css to config directory of the user
+- [ ] Make plugins as objects, so the trigger etc. doesn't have to be static
 
 **j**ust **a** **r**eal **v**iable **i**ntuitive **l**auncher
 
